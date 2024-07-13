@@ -1,10 +1,11 @@
-import 'dart:ui';
 import 'package:intl/intl.dart';
+import '../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:malltiverse_timbu/apis/timbu_api.dart';
-import 'package:malltiverse_timbu/constants/colors.dart';
 import 'package:malltiverse_timbu/screens/view_product.dart';
+import 'package:malltiverse_timbu/apis/models/mainListProduct.dart';
 import 'package:malltiverse_timbu/apis/models/listOfProductItem.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -18,52 +19,62 @@ class ProductScreen extends StatefulWidget {
 }
 
 class _ProductScreenState extends State<ProductScreen> {
-  List<Item> _list = [];
+  final Map<String, List<Item>> _categoryProducts = {};
+  
+  get cart => null;
 
   @override
   void initState() {
     super.initState();
-    getAllProduct();
+    getAllProductByCategory();
   }
 
-  void getAllProduct() {
+  void getAllProductByCategory() async {
     final get = Provider.of<TimbuApiProvider>(context, listen: false);
-    get.getProduct().then((value) {
-      setState(() {
-        _list = value.items;
-      });
-    });
+    var categories = ["Tech Gadget", "Men's Fashion", "Women's Fashion"];
+
+    for (String category in categories) {
+      try {
+        MainProduct mainProduct = await get.getProductByCategory(category);
+        setState(() {
+          _categoryProducts[category] = mainProduct.items;
+        });
+      } catch (e) {
+        if (kDebugMode) {
+          print('Error fetching category $category: $e');
+        }
+      }
+    }
   }
+   void addTocart(Item productModel) async {
+    cart.add(productModel);
+    print('${productModel.name} added to cart');
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    final get = context.watch<TimbuApiProvider>();
     final NumberFormat currencyFormat =
         NumberFormat.currency(symbol: '₦', decimalDigits: 2);
 
     return Scaffold(
-      backgroundColor: colorBgW,
       appBar: AppBar(
-        leading: const Image(image: AssetImage('./assets/images/mall_logo.png')),
+        leading: Image.asset('./assets/images/mall_logo.png'),
         title: const Text(
-          'Jejelove Products List',
-          style: TextStyle(
-            color: Colors.black, 
-            fontWeight: FontWeight.bold
-          ),
+          'Product List',
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         backgroundColor: colorBgW,
         elevation: 4.0,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: get.loading
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Column(
+      backgroundColor: colorBgW,
+      body: _categoryProducts.isEmpty
+          ? const Center(child: CircularProgressIndicator())
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Container(
@@ -78,7 +89,6 @@ class _ProductScreenState extends State<ProductScreen> {
                       ),
                       child: Container(
                         decoration: BoxDecoration(
-                          color: const Color(0x80b2b2b2),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: const Padding(
@@ -88,19 +98,29 @@ class _ProductScreenState extends State<ProductScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Middle Title',
+                                'Premium Sound,',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              SizedBox(height: 8),
-                              Text(
-                                'Subtitle Text',
+                              SizedBox(height: 2),
+                               Text(
+                                'Premium Savings',
                                 style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
+                                  color: colorBgW,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              SizedBox(height: 2),
+                              Text(
+                                'Limited offer, hope on and get yours now',
+                                style: TextStyle(
+                                  color: colorBgW,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ],
@@ -109,115 +129,130 @@ class _ProductScreenState extends State<ProductScreen> {
                       ),
                     ),
                     const SizedBox(height: 44),
-                    const Text(
-                      'Tech Gadget',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 16),
-                    GridView.builder(
-                      shrinkWrap: true,
-                      padding: EdgeInsets.zero,
-                      physics: const NeverScrollableScrollPhysics(),
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 8,
-                        crossAxisSpacing: 8,
-                        mainAxisExtent: 350,
-                      ),
-                      itemCount: _list.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        var product = _list[index];
-                        return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ViewProductPage(
-                                  id: product.id,
-                                  itemPrice: currencyFormat.format(
-                                      product.currentPrice?[0].ngn[0] ?? 0),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: _categoryProducts.keys.map((category) {
+                        List<Item> products = _categoryProducts[category]!;
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                category,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                            );
-                          },
-                         child: Card(
-                            color: Colors.white.withOpacity(1),
-                            child: Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Column(
-                                children: [
-                                  Container(
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xABededed),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Center(
-                                      child: Image.network(
-                                        "https://api.timbu.cloud/images/${product.photos[0].url}",
-                                        height: 184,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        currencyFormat.format(product.currentPrice?[0].ngn[0] ?? 0),
-                                        style: const TextStyle(
-                                            fontSize: 16, fontWeight: FontWeight.bold),
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(
-                                          Icons.shopping_bag_outlined,
-                                          color: colorPrimary,
-                                          size: 24,
+                            ),
+                            SizedBox(
+                              height: 200,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: products.length,
+                                itemBuilder: (context, index) {
+                                  Item product = products[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                ViewProductPage(
+                                              id: product.id,
+                                              itemPrice: currencyFormat.format(
+                                                  product.currentPrice?[0]
+                                                          .ngn[0] ??
+                                                      0),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 185,
+                                        height: 347,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: Colors.white,
+                                          boxShadow: [
+                                            BoxShadow(
+                                              color:
+                                                  Colors.grey.withOpacity(0.5),
+                                              spreadRadius: 2,
+                                              blurRadius: 5,
+                                              offset: const Offset(0, 3),
+                                            ),
+                                          ],
                                         ),
-                                        onPressed: () {
-                                          success(
-                                              context,
-                                              "${product.name} added to cart",
-                                              colorPrimary);
-                                          widget.addToCart(product);
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                  Align(
-                                    alignment: Alignment.bottomLeft,
-                                    child: Text(
-                                      product.name!,
-                                      textAlign: TextAlign.start,
-                                      style: const TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              child: Center(
+                                                child: Image.network(
+                                                  "https://api.timbu.cloud/images/${product.photos[0].url}",
+                                                  height: 112,
+                                                  width: 150,
+                                                  fit: BoxFit.contain,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    product.name ?? '',
+                                                    style: const TextStyle(
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                  const SizedBox(height: 4),
+                                                  Text(
+                                                    currencyFormat.format(
+                                                        product.currentPrice?[0]
+                                                                .ngn[0] ??
+                                                            0),
+                                                    style: const TextStyle(
+                                                        fontSize: 16,
+                                                        fontWeight:
+                                                            FontWeight.bold),
+                                                  ),
+                                                  
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ],
+                                  );
+                                },
                               ),
                             ),
-                          ),
+                          ],
                         );
-                      },
+                      }).toList(),
                     ),
                   ],
                 ),
-        ),
-      ),
+              ),
+            ),
     );
   }
-}
-
-void success(BuildContext context, String successMessage, Color color) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      backgroundColor: color,
-      content: Text(
-        successMessage,
-        style: const TextStyle(color: Colors.white),
-      ),
-      duration: const Duration(seconds: 2),
-    ),
-  );
 }

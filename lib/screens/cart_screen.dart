@@ -1,5 +1,6 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:malltiverse_timbu/constants/colors.dart';
 import 'package:malltiverse_timbu/model/message_res.dart';
 import 'package:malltiverse_timbu/screens/checkout_screen.dart';
@@ -103,13 +104,13 @@ class _CartPageState extends State<CartPage> {
                                 Row(
                                   children: [
                                     IconButton(
-                                      icon: const Icon(Icons.remove),
+                                      icon: const Icon(IconsaxPlusLinear.minus_square),
                                       onPressed: () {
                                         decrementQuantity(product);
                                       },
                                     ),
                                     IconButton(
-                                      icon: const Icon(Icons.add),
+                                      icon: const Icon(IconsaxPlusLinear.add_square),
                                       onPressed: () {
                                         incrementQuantity(product);
                                       },
@@ -121,7 +122,7 @@ class _CartPageState extends State<CartPage> {
                           ],
                         ),
                         trailing: IconButton(
-                          icon: const Icon(Icons.delete, color: Colors.red),
+                          icon: const Icon(IconsaxPlusLinear.trash,),
                           onPressed: () {
                             success(
                                 context: context,

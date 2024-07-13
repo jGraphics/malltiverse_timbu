@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:malltiverse_timbu/constants/colors.dart';
 import 'package:malltiverse_timbu/screens/cart_screen.dart';
-import 'package:malltiverse_timbu/screens/profile_screen.dart';
 import 'package:malltiverse_timbu/screens/product_screen.dart';
+import 'package:malltiverse_timbu/screens/checkout_screen.dart';
+import 'package:malltiverse_timbu/screens/checkout_screen2.dart';
 import 'package:malltiverse_timbu/apis/models/listOfProductItem.dart';
 
 class BNavWidget extends StatefulWidget {
@@ -64,7 +65,8 @@ void removeFromCart(Item product) {
         removeFromCart: removeFromCart,
         updateCart: updateCart,
       ),
-      const ProfileScreen(),
+      const CheckoutSuccessPage(),
+      CheckoutStage2(),
     ];
   }
 
@@ -79,8 +81,8 @@ void removeFromCart(Item product) {
         items: <BottomNavigationBarItem>[
           const BottomNavigationBarItem(
             icon: Icon(IconsaxPlusBold.home_2),
-            label: 'Home',
-          ),
+            label: 'Home'
+            ),
           BottomNavigationBarItem(
             icon: Stack(
               children: <Widget>[
@@ -91,7 +93,7 @@ void removeFromCart(Item product) {
                     child: Container(
                       padding: const EdgeInsets.all(1),
                       decoration: BoxDecoration(
-                        color: Colors.red,
+                        color: colorPrimary,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       constraints: const BoxConstraints(
@@ -110,11 +112,11 @@ void removeFromCart(Item product) {
                   ),
               ],
             ),
-            label: 'Cart',
+            label: 'Cart'
           ),
           const BottomNavigationBarItem(
             icon: Icon(IconsaxPlusBold.shopping_cart),
-            label: 'Profile',
+            label: 'Checkout'
           ),
         ],
         currentIndex: _selectedIndex,

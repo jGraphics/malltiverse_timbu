@@ -9,6 +9,8 @@ class CurrentPrice {
         ngn: List<dynamic>.from(json["NGN"].map((x) => x)),
       );
 
+  get price => null;
+
   Map<String, dynamic> toJson() => {
         "NGN": List<dynamic>.from(ngn.map((x) => x)),
       };

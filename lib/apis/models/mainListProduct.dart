@@ -51,6 +51,6 @@ class MainProduct {
       };
 }
 
-Item2 singleItemFromJson(String str) => Item2.fromJson(json.decode(str));
+Item singleItemFromJson(String str) => Item.fromJson(json.decode(str));
 
-String singleItemToJson(Item2 data) => json.encode(data.toJson());
+String singleItemToJson(Item data) => json.encode(data.toJson());

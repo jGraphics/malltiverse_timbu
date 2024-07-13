@@ -1,5 +1,4 @@
 import 'apis/timbu_api.dart';
-import 'constants/bNav.dart';
 import 'screens/cart_screen.dart';
 import 'screens/view_product.dart';
 import 'screens/profile_screen.dart';
@@ -12,6 +11,8 @@ import 'screens/checkout_screen2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'apis/models/OnBoardingController.dart';
+import 'package:malltiverse_timbu/constants/bottom_bar.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: 'bnav',
         routes: {
-          'bnav': (context) => const BNavWidget(),
+          'bnav': (context) => const BottomNav(),
         //  'onboarding': (context) => const OnboardingScreen(),
           'checkout': (context) => const CheckoutSuccessPage(),
           'cart': (context) => CartPage(

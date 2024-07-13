@@ -11,6 +11,7 @@ import 'package:malltiverse_timbu/constants/colors.dart';
 import 'package:malltiverse_timbu/widgets/review_slider.dart';
 import 'package:malltiverse_timbu/apis/models/listOfProductItem.dart';
 
+
 class ViewProductPage extends StatefulWidget {
   const ViewProductPage({super.key, this.id, this.itemPrice});
   final String? id;
@@ -22,8 +23,10 @@ class ViewProductPage extends StatefulWidget {
 
 class _ViewProductPageState extends State<ViewProductPage> {
   var name = '';
-  Item2? item2;
+  Item? item;
   bool isLoading = true;
+  
+  get cart => null;
 
   @override
   void initState() {
@@ -40,7 +43,7 @@ class _ViewProductPageState extends State<ViewProductPage> {
       var product = await get.getAProduct(widget.id!);
       setState(() {
         name = product.name;
-        item2 = product;
+        item = product;
         isLoading = false;
       });
       log(product.name);
@@ -52,8 +55,9 @@ class _ViewProductPageState extends State<ViewProductPage> {
     }
   }
 
-  void addTocart(Item2 productModel) async {
-    cart2.add(productModel);
+  void addTocart(Item productModel) async {
+    // Assuming `cart2` is a List<Item2> defined elsewhere in your code
+    cart.add(productModel);
     if (kDebugMode) {
       print('${productModel.name} added to cart');
     }
@@ -66,9 +70,10 @@ class _ViewProductPageState extends State<ViewProductPage> {
   final NumberFormat currencyFormat =
       NumberFormat.currency(symbol: '₦', decimalDigits: 2);
 
- @override
+  @override
   Widget build(BuildContext context) {
-    double? itemPrice = double.tryParse(widget.itemPrice?.replaceAll('₦', '').replaceAll(',', '') ?? '0');
+    double? itemPrice = double.tryParse(
+        widget.itemPrice?.replaceAll('₦', '').replaceAll(',', '') ?? '0');
     return Scaffold(
       backgroundColor: colorBgW,
       appBar: AppBar(
@@ -97,15 +102,15 @@ class _ViewProductPageState extends State<ViewProductPage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  if (item2 != null) ...[
+                  if (item != null) ...[
                     SizedBox(
                       height: 350,
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
-                        itemCount: item2!.photos.length,
+                        itemCount: item!.photos.length,
                         itemBuilder: (context, index) {
                           var photoUrl =
-                              "https://api.timbu.cloud/images/${item2!.photos[index].url}";
+                              "https://api.timbu.cloud/images/${item!.photos[index].url}";
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Center(
@@ -130,18 +135,15 @@ class _ViewProductPageState extends State<ViewProductPage> {
                               topLeft: Radius.circular(40),
                               topRight: Radius.circular(40))),
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 10.0, right: 10),
+                        padding: const EdgeInsets.only(left: 20, right:210),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            Row(
+                              Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  item2!.name.toUpperCase(),
+                                  item!.name!.toUpperCase(),
                                   softWrap: true,
                                   style: const TextStyle(
                                       fontSize: 17,
@@ -160,15 +162,12 @@ class _ViewProductPageState extends State<ViewProductPage> {
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
+                              Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Quantity = ${item2!.availableQuantity} pcs available now',
-                                  style: const TextStyle(color: Colors.orange),
+                                  'Quantity = ${item!.availableQuantity} pcs available now',
+                                  style: const TextStyle(color: Colors.orange, fontWeight: FontWeight.normal),
                                 ),
                                 InkWell(
                                   onTap: () {},
@@ -178,9 +177,6 @@ class _ViewProductPageState extends State<ViewProductPage> {
                                   ),
                                 )
                               ],
-                            ),
-                            const SizedBox(
-                              height: 20,
                             ),
                             Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,7 +197,7 @@ class _ViewProductPageState extends State<ViewProductPage> {
                                         const SizedBox(
                                           height: 10,
                                         ),
-                                        item2!.description == null
+                                        item!.description == null
                                             ? Text(
                                                 text2,
                                                 softWrap: true,
@@ -212,7 +208,7 @@ class _ViewProductPageState extends State<ViewProductPage> {
                                                     color: Colors.black),
                                               )
                                             : Text(
-                                                item2!.description,
+                                                item!.description!,
                                                 style: const TextStyle(
                                                     fontSize: 17,
                                                     fontWeight:
@@ -240,8 +236,8 @@ class _ViewProductPageState extends State<ViewProductPage> {
         decoration: const BoxDecoration(color: colorBgW),
         child: InkWell(
           onTap: () {
-            if (item2 != null) {
-              addTocart(item2!);
+            if (item != null) {
+              addTocart(item!);
             }
           },
           child: Padding(
@@ -250,7 +246,7 @@ class _ViewProductPageState extends State<ViewProductPage> {
             child: Container(
               height: 60,
               decoration: const BoxDecoration(
-                  color: bg,
+                  color: colorPrimary,
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20),
@@ -264,11 +260,11 @@ class _ViewProductPageState extends State<ViewProductPage> {
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
-                        color: colorBgW),
+                        color: Colors.white),
                   ),
                   Icon(
                     IconsaxPlusBold.shopping_cart,
-                    color: colorBgW,
+                    color: Colors.white,
                     size: 24,
                   ),
                 ],

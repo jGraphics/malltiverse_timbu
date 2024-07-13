@@ -4,19 +4,17 @@ import '../screens/product_screen.dart';
 import '../apis/models/listOfProductItem.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:malltiverse_timbu/constants/colors.dart';
-import 'package:malltiverse_timbu/screens/profile_screen.dart';
+import 'package:malltiverse_timbu/screens/checkout_screen.dart';
+import 'package:malltiverse_timbu/screens/checkout_screen2.dart';
 
-
-
-
-class BNavWidget extends StatefulWidget {
-  const BNavWidget({super.key});
+class BottomNav extends StatefulWidget {
+  const BottomNav({super.key});
 
   @override
-  State<BNavWidget> createState() => _BNavWidgetState();
+  State<BottomNav> createState() => _BottomNavState();
 }
 
-class _BNavWidgetState extends State<BNavWidget> {
+class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0;
   List<Item> cart = [];
 
@@ -26,9 +24,10 @@ class _BNavWidgetState extends State<BNavWidget> {
     });
   }
 
- void addToCart(Item product) {
+  void addToCart(Item product) {
     setState(() {
-      final existingItemIndex = cart.indexWhere((item) => item.id == product.id);
+      final existingItemIndex =
+          cart.indexWhere((item) => item.id == product.id);
       if (existingItemIndex >= 0) {
         cart[existingItemIndex].quantity++;
       } else {
@@ -37,9 +36,10 @@ class _BNavWidgetState extends State<BNavWidget> {
     });
   }
 
-void removeFromCart(Item product) {
+  void removeFromCart(Item product) {
     setState(() {
-      final existingItemIndex = cart.indexWhere((item) => item.id == product.id);
+      final existingItemIndex =
+          cart.indexWhere((item) => item.id == product.id);
       if (existingItemIndex >= 0) {
         cart[existingItemIndex].quantity--;
         if (cart[existingItemIndex].quantity == 0) {
@@ -48,6 +48,7 @@ void removeFromCart(Item product) {
       }
     });
   }
+
   void updateCart() {
     setState(() {});
   }
@@ -67,7 +68,8 @@ void removeFromCart(Item product) {
         removeFromCart: removeFromCart,
         updateCart: updateCart,
       ),
-      const ProfileScreen(),
+      const CheckoutSuccessPage(),
+      CheckoutStage2(),
     ];
   }
 
@@ -75,100 +77,123 @@ void removeFromCart(Item product) {
   Widget build(BuildContext context) {
     int cartItemCount = getTotalCartQuantity();
     return Scaffold(
-      body: Center(
-        child: _widgetOptions().elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          const BottomNavigationBarItem(
-            icon: Icon(IconsaxPlusBold.add),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Stack(
-              children: <Widget>[
-                const Icon(Icons.shopping_cart_outlined),
-                if (cartItemCount > 0)
-                  Positioned(
-                    right: 0,
-                    child: Container(
-                      padding: const EdgeInsets.all(1),
-                      decoration: BoxDecoration(
-                        color: Colors.red,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      constraints: const BoxConstraints(
-                        minWidth: 18,
-                        minHeight: 18,
-                      ),
-                      child: Text(
-                        '$cartItemCount',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            label: 'Cart',
-          ),
-          const BottomNavigationBarItem(
-            icon: Icon(Icons.person_2_outlined),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: colorPrimary,
-        unselectedItemColor: Colors.white,
-        onTap: _onItemTapped,
-        backgroundColor: Colors.black,
-      ),
-    );
-  }
-}
-
-
-bottomNavigationBar: Container(
-        decoration: const BoxDecoration(color: Colors.white),
-        child: InkWell(
-          onTap: () {
-            if (item2 != null) {
-              addTocart(item2!);
-            }
-          },
+        body: Center(
+          child: _widgetOptions().elementAt(_selectedIndex),
+        ),
+        bottomNavigationBar: Container(
+          decoration: const BoxDecoration(color: colorBgW),
           child: Padding(
             padding:
-                const EdgeInsets.only(left: 8.0, right: 18, bottom: 5, top: 5),
+                const EdgeInsets.only(left: 24, right: 24, bottom: 15, top: 15),
             child: Container(
               height: 60,
               decoration: const BoxDecoration(
-                  color: colorPrimary,
+                  color: blFa,
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(75),
-                      bottomLeft: Radius.circular(75),
-                      bottomRight: Radius.circular(25))),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Add To Cart  ',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white),
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20))),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () => _onItemTapped(0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          IconsaxPlusBold.home_2,
+                          color: _selectedIndex == 0
+                              ? colorPrimary
+                              : colorBgW,
+                        ),
+                        Text(
+                          'Home',
+                          style: TextStyle(
+                            color: _selectedIndex == 0
+                                ? colorPrimary
+                                : colorBgW,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  Icon(
-                    Icons.shopping_cart_outlined,
-                    color: Colors.white,
-                    size: 24,
+                  GestureDetector(
+                    onTap: () => _onItemTapped(1),
+                    child: Stack(
+                      children: <Widget>[
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Icon(
+                              IconsaxPlusBold.shopping_cart,
+                              color: _selectedIndex == 1
+                                  ? colorPrimary
+                                  : colorBgW,
+                            ),
+                            Text(
+                              'Cart',
+                              style: TextStyle(
+                                color: _selectedIndex == 1
+                                    ? colorPrimary
+                                    : colorBgW,
+                              ),
+                            ),
+                          ],
+                        ),
+                        if (cartItemCount > 0)
+                          Positioned(
+                            right: 0,
+                            child: Container(
+                              padding: const EdgeInsets.all(1),
+                              decoration: BoxDecoration(
+                                color: colorPrimary,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              constraints: const BoxConstraints(
+                                minWidth: 18,
+                                minHeight: 18,
+                              ),
+                              child: Text(
+                                '$cartItemCount',
+                                style: const TextStyle(
+                                  color: colorPrimary,
+                                  fontSize: 12,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () => _onItemTapped(2),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Icon(
+                          IconsaxPlusBold.shopping_cart,
+                          color: _selectedIndex == 2
+                              ? colorPrimary
+                              : colorBgW,
+                        ),
+                        Text(
+                          'Checkout',
+                          style: TextStyle(
+                            color: _selectedIndex == 2
+                                ? colorPrimary
+                                : colorBgW,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
           ),
-        ),
-      ),
+        ));
+  }
+}
