@@ -67,7 +67,7 @@ class _CheckoutStage2State extends State<CheckoutStage2> {
             ),
             const SizedBox(height: 20),
            const Text(
-              'Delivery Option',
+              'Delivery',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 35,),
