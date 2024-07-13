@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:malltiverse_timbu/constants/colors.dart';
 import 'package:malltiverse_timbu/model/message_res.dart';
-import 'package:malltiverse_timbu/screens/checkout_screen.dart';
+import 'package:malltiverse_timbu/screens/checkout_screen2.dart';
 import 'package:malltiverse_timbu/apis/models/listOfProductItem.dart';
 
 class CartPage extends StatefulWidget {
@@ -28,7 +28,7 @@ class _CartPageState extends State<CartPage> {
   void checkout() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const CheckoutSuccessPage()),
+      MaterialPageRoute(builder: (context) => CheckoutStage2()),
     );
     setState(() {
       widget.cart.clear();

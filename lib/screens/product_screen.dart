@@ -1,11 +1,9 @@
 import 'package:intl/intl.dart';
-import '../constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:malltiverse_timbu/apis/timbu_api.dart';
+import 'package:malltiverse_timbu/constants/colors.dart';
 import 'package:malltiverse_timbu/screens/view_product.dart';
-import 'package:malltiverse_timbu/apis/models/mainListProduct.dart';
 import 'package:malltiverse_timbu/apis/models/listOfProductItem.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -20,8 +18,6 @@ class ProductScreen extends StatefulWidget {
 
 class _ProductScreenState extends State<ProductScreen> {
   final Map<String, List<Item>> _categoryProducts = {};
-  
-  get cart => null;
 
   @override
   void initState() {
@@ -33,24 +29,13 @@ class _ProductScreenState extends State<ProductScreen> {
     final get = Provider.of<TimbuApiProvider>(context, listen: false);
     var categories = ["Tech Gadget", "Men's Fashion", "Women's Fashion"];
 
-    for (String category in categories) {
-      try {
-        MainProduct mainProduct = await get.getProductByCategory(category);
-        setState(() {
-          _categoryProducts[category] = mainProduct.items;
-        });
-      } catch (e) {
-        if (kDebugMode) {
-          print('Error fetching category $category: $e');
-        }
-      }
+    for (var category in categories) {
+      var products = await get.getProductByCategory(category);
+      setState(() {
+        _categoryProducts[category] = products.items;
+      });
     }
   }
-   void addTocart(Item productModel) async {
-    cart.add(productModel);
-    print('${productModel.name} added to cart');
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +44,10 @@ class _ProductScreenState extends State<ProductScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: Image.asset('./assets/images/mall_logo.png'),
+        leading: Image.asset(
+          './assets/images/mall_logo.png',
+          fit: BoxFit.contain,
+        ),
         title: const Text(
           'Product List',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
@@ -106,7 +94,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                 ),
                               ),
                               SizedBox(height: 2),
-                               Text(
+                              Text(
                                 'Premium Savings',
                                 style: TextStyle(
                                   color: colorBgW,
@@ -116,7 +104,7 @@ class _ProductScreenState extends State<ProductScreen> {
                               ),
                               SizedBox(height: 2),
                               Text(
-                                'Limited offer, hope on and get yours now',
+                                'Limited offer, hop on and get yours now',
                                 style: TextStyle(
                                   color: colorBgW,
                                   fontSize: 12,
@@ -233,7 +221,6 @@ class _ProductScreenState extends State<ProductScreen> {
                                                         fontWeight:
                                                             FontWeight.bold),
                                                   ),
-                                                  
                                                 ],
                                               ),
                                             ),

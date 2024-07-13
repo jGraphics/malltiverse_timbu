@@ -4,7 +4,6 @@ import '../screens/product_screen.dart';
 import '../apis/models/listOfProductItem.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:malltiverse_timbu/constants/colors.dart';
-import 'package:malltiverse_timbu/screens/checkout_screen.dart';
 import 'package:malltiverse_timbu/screens/checkout_screen2.dart';
 
 class BottomNav extends StatefulWidget {
@@ -68,7 +67,6 @@ class _BottomNavState extends State<BottomNav> {
         removeFromCart: removeFromCart,
         updateCart: updateCart,
       ),
-      const CheckoutSuccessPage(),
       CheckoutStage2(),
     ];
   }
@@ -148,7 +146,7 @@ class _BottomNavState extends State<BottomNav> {
                             child: Container(
                               padding: const EdgeInsets.all(1),
                               decoration: BoxDecoration(
-                                color: colorPrimary,
+                                color: blFa,
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               constraints: const BoxConstraints(

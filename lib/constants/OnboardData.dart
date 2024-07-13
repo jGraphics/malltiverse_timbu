@@ -84,7 +84,7 @@ class OnbordTitleDescription extends StatelessWidget {
               .headlineSmall!
               .copyWith(fontWeight: FontWeight.w500),
         ),
-        const SizedBox(height: defaultPadding),
+        const SizedBox(height: 50),
         Text(
           description,
           textAlign: TextAlign.center,
