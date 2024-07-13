@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:malltiverse_timbu/constants/colors.dart';
 import 'package:malltiverse_timbu/screens/checkout_screen.dart';
 
@@ -17,14 +18,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Payment'),
-        backgroundColor: colorPrimary,
+        backgroundColor: colorBgW,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             Image.asset(
-              './assets/images/Card.png', 
+              './assets/images/Card.png',
               height: 217,
             ),
             const SizedBox(height: 20),
@@ -65,18 +66,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 62),
             Container(
-              width: double.infinity,
-              height: 60,
+              width: 307,
+              height: 44,
               decoration: const BoxDecoration(
                 color: colorPrimary,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
-                ),
+                borderRadius: BorderRadius.all(Radius.circular(12)),
               ),
               child: TextButton(
                 onPressed: () {
@@ -86,12 +82,14 @@ class _PaymentScreenState extends State<PaymentScreen> {
                     ),
                   );
                 },
-                child: const Text(
+                child: Text(
                   'Make Payment',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    color: Colors.white,
+                  style: GoogleFonts.montserrat(
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 12,
+                      color: blFa,
+                    ),
                   ),
                 ),
               ),

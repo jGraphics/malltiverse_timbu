@@ -7,7 +7,7 @@ class ReviewSlider extends StatelessWidget {
   final String text2 = lorem(paragraphs: 1, words: 24);
   final String text3 = lorem(paragraphs: 1, words: 19);
 
-  ReviewSlider({super.key});
+  ReviewSlider({super.key, required List<String> reviews});
 
   @override
   Widget build(BuildContext context) {

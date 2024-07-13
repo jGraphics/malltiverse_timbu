@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:malltiverse_timbu/apis/timbu_api.dart';
 import 'package:malltiverse_timbu/constants/colors.dart';
 import 'package:malltiverse_timbu/screens/view_product.dart';
@@ -44,13 +45,21 @@ class _ProductScreenState extends State<ProductScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: 65,
         leading: Image.asset(
-          './assets/images/mall_logo.png',
+          './assets/images/mall_logo.png', width: 120, height: 40,
           fit: BoxFit.contain,
         ),
-        title: const Text(
+        title: Text(
           'Product List',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: GoogleFonts.montserrat(
+            textStyle: const TextStyle(
+              fontSize: 19.0,
+              fontWeight: FontWeight.w600,
+              height: 1.22,
+              color: blFa,
+            ),
+          ),
         ),
         centerTitle: true,
         backgroundColor: colorBgW,
@@ -135,7 +144,7 @@ class _ProductScreenState extends State<ProductScreen> {
                               ),
                             ),
                             SizedBox(
-                              height: 200,
+                              height: 350,
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
                                 itemCount: products.length,
@@ -160,8 +169,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                         );
                                       },
                                       child: Container(
-                                        width: 185,
-                                        height: 347,
+                                        width: 250,
                                         decoration: BoxDecoration(
                                           borderRadius:
                                               BorderRadius.circular(10),
@@ -182,14 +190,15 @@ class _ProductScreenState extends State<ProductScreen> {
                                           children: [
                                             ClipRRect(
                                               borderRadius:
-                                                  BorderRadius.circular(10),
-                                              child: Center(
-                                                child: Image.network(
-                                                  "https://api.timbu.cloud/images/${product.photos[0].url}",
-                                                  height: 112,
-                                                  width: 150,
-                                                  fit: BoxFit.contain,
-                                                ),
+                                                  const BorderRadius.only(
+                                                topLeft: Radius.circular(10),
+                                                topRight: Radius.circular(10),
+                                              ),
+                                              child: Image.network(
+                                                "https://api.timbu.cloud/images/${product.photos[0].url}",
+                                                height: 150,
+                                                width: double.infinity,
+                                                fit: BoxFit.contain,
                                               ),
                                             ),
                                             Padding(
@@ -212,6 +221,36 @@ class _ProductScreenState extends State<ProductScreen> {
                                                   ),
                                                   const SizedBox(height: 4),
                                                   Text(
+                                                    product.description ?? '',
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                    ),
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                  const SizedBox(height: 4),
+                                                  const Row(
+                                                    children: [
+                                                      Image(
+                                                          image: AssetImage(
+                                                              'assets/images/fill_star.png')),
+                                                      Image(
+                                                          image: AssetImage(
+                                                              'assets/images/fill_star.png')),
+                                                      Image(
+                                                          image: AssetImage(
+                                                              'assets/images/fill_star.png')),
+                                                      Image(
+                                                          image: AssetImage(
+                                                              'assets/images/fill_star.png')),
+                                                      Image(
+                                                          image: AssetImage(
+                                                              'assets/images/fill_star.png')),
+                                                    ],
+                                                  ),
+                                                  const SizedBox(height: 4),
+                                                  Text(
                                                     currencyFormat.format(
                                                         product.currentPrice?[0]
                                                                 .ngn[0] ??
@@ -220,6 +259,41 @@ class _ProductScreenState extends State<ProductScreen> {
                                                         fontSize: 16,
                                                         fontWeight:
                                                             FontWeight.bold),
+                                                  ),
+                                                  OutlinedButton(
+                                                    onPressed: () {
+                                                      widget.addToCart(product);
+                                                    },
+                                                    style: ButtonStyle(
+                                                      padding:
+                                                          WidgetStateProperty.all(
+                                                              const EdgeInsets.symmetric(
+                                                                  horizontal:
+                                                                      20)),
+                                                      side: WidgetStateProperty.all(
+                                                        const BorderSide(
+                                                          color: colorPrimary,
+                                                          width: 1.0,
+                                                        ),
+                                                      ),
+                                                      shape: WidgetStateProperty.all(
+                                                        RoundedRectangleBorder(
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                  14),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    child: Text(
+                                                      'Add to Cart',
+                                                      style:
+                                                          GoogleFonts.montserrat(
+                                                        color: Colors.black,
+                                                        fontSize: 12,
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
                                                   ),
                                                 ],
                                               ),

@@ -24,7 +24,7 @@ class _ViewProductPageState extends State<ViewProductPage> {
   var name = '';
   Item? item;
   bool isLoading = true;
-  List<Item> cart = []; // Initialize the cart here
+  List<Item> cart = [];
 
   @override
   void initState() {
@@ -66,11 +66,13 @@ class _ViewProductPageState extends State<ViewProductPage> {
   String text = lorem(paragraphs: 1, words: 20);
   String text2 = lorem(paragraphs: 1, words: 19);
 
-  final NumberFormat currencyFormat = NumberFormat.currency(symbol: '₦', decimalDigits: 2);
+  final NumberFormat currencyFormat =
+      NumberFormat.currency(symbol: '₦', decimalDigits: 2);
 
   @override
   Widget build(BuildContext context) {
-    double? itemPrice = double.tryParse(widget.itemPrice?.replaceAll('₦', '').replaceAll(',', '') ?? '0');
+    double? itemPrice = double.tryParse(
+        widget.itemPrice?.replaceAll('₦', '').replaceAll(',', '') ?? '0');
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 243, 235, 235),
       appBar: AppBar(
@@ -95,187 +97,109 @@ class _ViewProductPageState extends State<ViewProductPage> {
       ),
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
-          : item == null
-              ? const Center(child: Text("Product not found"))
-              : SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      if (item != null) ...[
-                        SizedBox(
-                          height: 350,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: item!.photos.length,
-                            itemBuilder: (context, index) {
-                              var photoUrl =
-                                  "https://api.timbu.cloud/categories/${item?.photos[index].url}";
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Center(
-                                  child: Image.network(
-                                    photoUrl,
-                                    height: 250,
-                                    width: 250,
-                                    fit: BoxFit.contain,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(40),
-                                  topRight: Radius.circular(40))),
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 10.0, right: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const SizedBox(
-                                  height: 30,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      item!.name!.toUpperCase(),
-                                      softWrap: true,
-                                      style: const TextStyle(
-                                          fontSize: 17,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black),
-                                    ),
-                                    const SizedBox(height: 10,),
-                                    Text(
-                                      currencyFormat.format(itemPrice),
-                                      style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Quantity = ${item!.availableQuantity} pcs available now',
-                                      style: const TextStyle(color: Colors.orange),
-                                    ),
-                                    InkWell(
-                                      onTap: () {},
-                                      child: const SizedBox(
-                                        width: 50,
-                                        height: 40,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Flexible(
-                                      child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            const Text(
-                                              "Description",
-                                              style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.black),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            item!.description == null
-                                                ? Text(
-                                                    text2,
-                                                    softWrap: true,
-                                                    style: const TextStyle(
-                                                        fontSize: 17,
-                                                        fontWeight: FontWeight.normal,
-                                                        color: Colors.black),
-                                                  )
-                                                : Text(
-                                                    item!.description,
-                                                    style: const TextStyle(
-                                                        fontSize: 17,
-                                                        fontWeight: FontWeight.normal,
-                                                        color: Colors.black),
-                                                  )
-                                          ]),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                ReviewSlider(),
-                              ],
+          : SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    item != null && item!.photos.isNotEmpty
+                        ? Container(
+                            width: 380,
+                            height: 232,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                    "https://api.timbu.cloud/images/${item?.photos[0].url}"),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                        : Container(
+                            width: 380,
+                            height: 232,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: const DecorationImage(
+                                image: AssetImage('./assets/images/hnc.png'),
+                                fit: BoxFit.cover,
+                              ),
                             ),
                           ),
+                    const SizedBox(height: 20),
+                    Text(
+                      item!.name!.toUpperCase(),
+                      softWrap: true,
+                      style: const TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      currencyFormat.format(itemPrice ?? 0),
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.green,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Text(
+                      item?.description ?? text,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    ReviewSlider(reviews: const [
+                      "Great product!",
+                      "Worth the price!",
+                      "Highly recommend.",
+                      "Good quality.",
+                      "Satisfied with the purchase."
+                    ]),
+                    const SizedBox(height: 20),
+                    InkWell(
+                      onTap: () {
+                        if (item != null) {
+                          addTocart(item!);
+                        }
+                      },
+                      child: Container(
+                        height: 60,
+                        decoration: const BoxDecoration(
+                            color: blFa,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(25),
+                                topRight: Radius.circular(75),
+                                bottomLeft: Radius.circular(75),
+                                bottomRight: Radius.circular(25))),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Add To Cart  ',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: Colors.white),
+                            ),
+                            Icon(
+                              IconsaxPlusBold.shopping_cart,
+                              color: Colors.white,
+                              size: 24,
+                            ),
+                          ],
                         ),
-                      ]
-                    ],
-                  ),
+                      ),
+                    ),
+                  ],
                 ),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(color: Colors.white),
-        child: InkWell(
-          onTap: () {
-            if (item != null) {
-              addTocart(item!);
-            }
-          },
-          child: Padding(
-            padding:
-                const EdgeInsets.only(left: 8.0, right: 8, bottom: 5, top: 5),
-            child: Container(
-              height: 60,
-              decoration: const BoxDecoration(
-                  color: blFa,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(75),
-                      bottomLeft: Radius.circular(75),
-                      bottomRight: Radius.circular(25))),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Add To Cart  ',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                        color: Colors.white),
-                  ),
-                  Icon(
-                    IconsaxPlusBold.shopping_cart,
-                    color: Colors.white,
-                    size: 24,
-                  ),
-                ],
               ),
             ),
-          ),
-        ),
-      ),
     );
   }
 }

@@ -12,11 +12,11 @@ class CartPage extends StatefulWidget {
   final void Function() updateCart;
 
   const CartPage({
-    super.key,
+    Key? key,
     required this.cart,
     required this.removeFromCart,
     required this.updateCart,
-  });
+  }) : super(key: key);
 
   @override
   _CartPageState createState() => _CartPageState();
@@ -54,18 +54,21 @@ class _CartPageState extends State<CartPage> {
         widget.removeFromCart(product);
       }
     });
-    widget.updateCart();
+    widget.updateCart(); // Update cart state
   }
 
   @override
   Widget build(BuildContext context) {
     double totalPrice = widget.cart.fold(0.00, (previousValue, product) {
-      return previousValue +
-          (product.currentPrice?[0].ngn[0] * product.quantity);
+      return previousValue + (product.currentPrice?[0].ngn[0] ?? 0.0 * product.quantity);
     });
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My cart', style: TextStyle(fontWeight: FontWeight.bold),),
+        title: const Text(
+          'My Cart',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         backgroundColor: colorBgW,
       ),
@@ -74,118 +77,179 @@ class _CartPageState extends State<CartPage> {
         child: widget.cart.isNotEmpty
             ? Column(
                 children: [
-                  const Text(
-                    "The Items",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   ListView.builder(
                     shrinkWrap: true,
-                    itemCount: widget.cart.length,
+                    itemCount: widget.cart.length + 1, // +1 for the shopping summary card
                     physics: const NeverScrollableScrollPhysics(
-                        parent: AlwaysScrollableScrollPhysics()),
+                      parent: AlwaysScrollableScrollPhysics(),
+                    ),
                     itemBuilder: (context, index) {
-                      Item product = widget.cart[index];
-                      return ListTile(
-                        leading: Image.network(
-                            'https://api.timbu.cloud/images/${product.photos[0].url}'),
-                        title: Text('${product.name}'),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                                '₦${product.currentPrice?[0].ngn[0].toString()}'),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      if (index < widget.cart.length) {
+                        Item product = widget.cart[index];
+                        return Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: const BorderSide(color: Colors.grey, width: 1.0),
+                          ),
+                          elevation: 2,
+                          margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                          child: ListTile(
+                            contentPadding:
+                                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                            leading: Image.network(
+                              'https://api.timbu.cloud/images/${product.photos[0].url}',
+                              width: 60,
+                              height: 60,
+                              fit: BoxFit.cover,
+                            ),
+                            title: Text(
+                              '${product.name}',
+                              style: const TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('Quantity: ${product.quantity}'),
+                                Text(
+                                  '₦${product.currentPrice?[0].ngn[0].toString()}',
+                                  style: const TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(height: 4),
                                 Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    IconButton(
-                                      icon: const Icon(IconsaxPlusLinear.minus_square),
-                                      onPressed: () {
-                                        decrementQuantity(product);
-                                      },
-                                    ),
-                                    IconButton(
-                                      icon: const Icon(IconsaxPlusLinear.add_square),
-                                      onPressed: () {
-                                        incrementQuantity(product);
-                                      },
+                                    Text('Quantity: ${product.quantity}'),
+                                    Row(
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(IconsaxPlusLinear.minus_square),
+                                          onPressed: () {
+                                            decrementQuantity(product);
+                                          },
+                                        ),
+                                        IconButton(
+                                          icon: const Icon(IconsaxPlusLinear.add_square),
+                                          onPressed: () {
+                                            incrementQuantity(product);
+                                          },
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                        trailing: IconButton(
-                          icon: const Icon(IconsaxPlusLinear.trash,),
-                          onPressed: () {
-                            success(
-                                context: context,
-                                message: '${product.name} removed from cart');
-                            setState(() {
-                              widget.removeFromCart(product);
-                            });
-                            widget.updateCart(); // Update cart state
-                          },
-                        ),
-                      );
+                            trailing: IconButton(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () {
+                                success(
+                                  context: context,
+                                  message: '${product.name} removed from cart',
+                                );
+                                setState(() {
+                                  widget.removeFromCart(product);
+                                });
+                                widget.updateCart(); // Update cart state
+                              },
+                            ),
+                          ),
+                        );
+                      } else {
+                        // This section creates the shopping summary card
+                        return Card(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: const BorderSide(color: Colors.grey, width: 1.0),
+                          ),
+                          elevation: 2,
+                          margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Shopping Summary',
+                                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                                ),
+                                const SizedBox(height: 12),
+                                Row(
+                                  children: [
+                                    const Expanded(
+                                      flex: 3,
+                                      child: TextField(
+                                        decoration: InputDecoration(
+                                          hintText: 'Enter Discount Code',
+                                          border: OutlineInputBorder(),
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(width: 12),
+                                    Expanded(
+                                      flex: 1,
+                                      child: ElevatedButton(
+                                        onPressed: () {
+                                          // Apply discount logic
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: colorPrimary,
+                                        ),
+                                        child: const Text('Apply'),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 16),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text('Sub-Total'),
+                                    Text(
+                                      currencyFormat.format(totalPrice),
+                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                const Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text('Delivery Fee'),
+                                    const Text('₦1,500'),
+                                  ],
+                                ),
+                                const SizedBox(height: 8),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    const Text(
+                                      'Total Amount:',
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      currencyFormat.format(totalPrice),
+                                      style: const TextStyle(fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        );
+                      }
                     },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Text(
-                      'Total Price: ${currencyFormat.format(totalPrice)}',
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 40,
-                    height: 40,
-                  ),
-                  Center(
-                    child: InkWell(
-                      onTap: () {
-                        checkout();
-                      },
-                      child: Container(
-                        width: 220,
-                        height: 45,
-                        decoration: const BoxDecoration(
-                            color: Colors.black,
-                            shape: BoxShape.rectangle,
-                            borderRadius: BorderRadius.all(Radius.circular(7))),
-                        child: Center(
-                          child: Text("checkout".toUpperCase(),
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.bold)),
-                        ),
-                      ),
-                    ),
-                  )
                 ],
               )
             : const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 305,
-                  ),
+                  SizedBox(height: 305),
                   Center(
-                    child: Text('No Item in Cart',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500, 
-                      fontSize: 24),
+                    child: Text(
+                      'No Items in Cart',
+                      style: TextStyle(fontWeight: FontWeight.w500, fontSize: 24),
                     ),
                   ),
                 ],
