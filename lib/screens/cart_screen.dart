@@ -64,11 +64,11 @@ class _CartPageState extends State<CartPage> {
     });
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Your cart'),
+        title: const Text('My cart', style: TextStyle(fontWeight: FontWeight.bold),),
         centerTitle: true,
-        backgroundColor: colorPrimary,
+        backgroundColor: colorBgW,
       ),
-      backgroundColor: const Color.fromARGB(255, 243, 235, 235),
+      backgroundColor: colorBgW,
       body: SingleChildScrollView(
         child: widget.cart.isNotEmpty
             ? Column(
@@ -178,10 +178,14 @@ class _CartPageState extends State<CartPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 200,
+                    height: 305,
                   ),
                   Center(
-                    child: Text('No Items in Your Cart'),
+                    child: Text('No Item in Cart',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500, 
+                      fontSize: 24),
+                    ),
                   ),
                 ],
               ),

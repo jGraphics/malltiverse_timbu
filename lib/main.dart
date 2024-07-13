@@ -1,8 +1,8 @@
 import 'apis/timbu_api.dart';
 import 'constants/bNav.dart';
 import 'screens/cart_screen.dart';
-import 'screens/viewProduct.dart';
-import 'screens/profileScreen.dart';
+import 'screens/view_product.dart';
+import 'screens/profile_screen.dart';
 import 'screens/product_screen.dart';
 import 'screens/payment_screen.dart';
 import 'model/onboarding_model.dart';

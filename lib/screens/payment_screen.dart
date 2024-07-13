@@ -21,7 +21,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         child: Column(
           children: [
             Image.asset(
-              'assets/images/card_image.png', // Make sure you have a card image in your assets
+              'assets/images/card_image.png', 
               height: 150,
             ),
             const SizedBox(height: 20),

@@ -4,7 +4,7 @@ import '../screens/product_screen.dart';
 import '../apis/models/listOfProductItem.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:malltiverse_timbu/constants/colors.dart';
-import 'package:malltiverse_timbu/screens/profileScreen.dart';
+import 'package:malltiverse_timbu/screens/profile_screen.dart';
 
 
 
@@ -81,13 +81,13 @@ void removeFromCart(Item product) {
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           const BottomNavigationBarItem(
-            icon: Icon(IconsaxPlusBold.home_2),
+            icon: Icon(IconsaxPlusBold.add),
             label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Stack(
               children: <Widget>[
-                const Icon(IconsaxPlusBold.shopping_cart),
+                const Icon(Icons.shopping_cart_outlined),
                 if (cartItemCount > 0)
                   Positioned(
                     right: 0,
@@ -141,7 +141,7 @@ bottomNavigationBar: Container(
           },
           child: Padding(
             padding:
-                const EdgeInsets.only(left: 8.0, right: 8, bottom: 5, top: 5),
+                const EdgeInsets.only(left: 8.0, right: 18, bottom: 5, top: 5),
             child: Container(
               height: 60,
               decoration: const BoxDecoration(

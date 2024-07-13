@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:malltiverse_timbu/constants/colors.dart';
 import 'package:malltiverse_timbu/screens/cart_screen.dart';
-import 'package:malltiverse_timbu/screens/profileScreen.dart';
+import 'package:malltiverse_timbu/screens/profile_screen.dart';
 import 'package:malltiverse_timbu/screens/product_screen.dart';
 import 'package:malltiverse_timbu/apis/models/listOfProductItem.dart';
 
@@ -77,13 +78,13 @@ void removeFromCart(Item product) {
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           const BottomNavigationBarItem(
-            icon: Icon(Icons.house_rounded),
+            icon: Icon(IconsaxPlusBold.home_2),
             label: 'Home',
           ),
           BottomNavigationBarItem(
             icon: Stack(
               children: <Widget>[
-                const Icon(Icons.shopping_cart_outlined),
+                const Icon(IconsaxPlusBold.shopping_cart),
                 if (cartItemCount > 0)
                   Positioned(
                     right: 0,
@@ -112,7 +113,7 @@ void removeFromCart(Item product) {
             label: 'Cart',
           ),
           const BottomNavigationBarItem(
-            icon: Icon(Icons.person_2_outlined),
+            icon: Icon(IconsaxPlusBold.shopping_cart),
             label: 'Profile',
           ),
         ],

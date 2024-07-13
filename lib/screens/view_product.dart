@@ -4,10 +4,11 @@ import '../model/message_res.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/foundation.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:malltiverse_timbu/apis/timbu_api.dart';
 import 'package:malltiverse_timbu/constants/colors.dart';
-import 'package:malltiverse_timbu/widgets/reviewSlider.dart';
+import 'package:malltiverse_timbu/widgets/review_slider.dart';
 import 'package:malltiverse_timbu/apis/models/listOfProductItem.dart';
 
 class ViewProductPage extends StatefulWidget {
@@ -69,12 +70,12 @@ class _ViewProductPageState extends State<ViewProductPage> {
   Widget build(BuildContext context) {
     double? itemPrice = double.tryParse(widget.itemPrice?.replaceAll('₦', '').replaceAll(',', '') ?? '0');
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 243, 235, 235),
+      backgroundColor: colorBgW,
       appBar: AppBar(
         backgroundColor: colorPrimary,
         toolbarHeight: 60,
         leading: IconButton(
-          color: Colors.white,
+          color: colorBgW,
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {
             Navigator.pop(context);
@@ -124,7 +125,7 @@ class _ViewProductPageState extends State<ViewProductPage> {
                     ),
                     Container(
                       decoration: const BoxDecoration(
-                          color: Colors.white,
+                          color: colorBgW,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(40),
                               topRight: Radius.circular(40))),
@@ -236,7 +237,7 @@ class _ViewProductPageState extends State<ViewProductPage> {
               ),
             ),
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(color: Colors.white),
+        decoration: const BoxDecoration(color: colorBgW),
         child: InkWell(
           onTap: () {
             if (item2 != null) {
@@ -245,16 +246,16 @@ class _ViewProductPageState extends State<ViewProductPage> {
           },
           child: Padding(
             padding:
-                const EdgeInsets.only(left: 8.0, right: 8, bottom: 5, top: 5),
+                const EdgeInsets.only(left: 24, right: 20, bottom: 15, top: 15),
             child: Container(
               height: 60,
               decoration: const BoxDecoration(
-                  color: colorPrimary,
+                  color: bg,
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                      topRight: Radius.circular(75),
-                      bottomLeft: Radius.circular(75),
-                      bottomRight: Radius.circular(25))),
+                      topLeft: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20))),
               child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -263,11 +264,11 @@ class _ViewProductPageState extends State<ViewProductPage> {
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 20,
-                        color: Colors.white),
+                        color: colorBgW),
                   ),
                   Icon(
-                    Icons.shopping_cart_outlined,
-                    color: Colors.white,
+                    IconsaxPlusBold.shopping_cart,
+                    color: colorBgW,
                     size: 24,
                   ),
                 ],

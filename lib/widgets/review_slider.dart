@@ -54,7 +54,7 @@ class ReviewSlider extends StatelessWidget {
                       shape: BoxShape.rectangle,
                       image: DecorationImage(
                         fit: BoxFit.cover,
-                        image: AssetImage("assets/a1.jpg"),
+                        image: AssetImage("assets/images/hnc.png"),
                       ),
                       borderRadius: BorderRadius.all(Radius.circular(100)),
                     ),

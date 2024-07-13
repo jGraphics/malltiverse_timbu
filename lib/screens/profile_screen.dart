@@ -7,11 +7,12 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bg,
+      backgroundColor: colorBgW,
       appBar: AppBar(
         title: const Text('Profile'),
-        backgroundColor: colorPrimary,
+        backgroundColor: colorBgW,
         elevation: 0,
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -25,11 +26,10 @@ class ProfileScreen extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 50,
-                      backgroundImage: AssetImage('assets/profile_picture.png'), // Replace with your profile picture asset
-                    ),
+                      backgroundImage: AssetImage('./assets/images/hnc.png'),                   ),
                     SizedBox(height: 10),
                     Text(
-                      'John Doe', // Replace with actual user name
+                      'Jejelove Doe', // Replace with actual user name
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -38,7 +38,7 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 5),
                     Text(
-                      'johndoe@example.com', // Replace with actual user email
+                      'jejelovesolutions@gmail.com', 
                       style: TextStyle(
                         fontSize: 16,
                         color: Colors.white70,
