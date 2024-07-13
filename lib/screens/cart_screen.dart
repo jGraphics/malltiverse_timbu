@@ -57,10 +57,11 @@ class _CartPageState extends State<CartPage> {
     widget.updateCart(); // Update cart state
   }
 
-  @override
+ @override
   Widget build(BuildContext context) {
     double totalPrice = widget.cart.fold(0.00, (previousValue, product) {
-      return previousValue + (product.currentPrice?[0].ngn[0] ?? 0.0 * product.quantity);
+      return previousValue + 
+      (product.currentPrice?[0].ngn[0] ?? 0.0 * product.quantity);
     });
 
     return Scaffold(
@@ -87,10 +88,10 @@ class _CartPageState extends State<CartPage> {
                     itemBuilder: (context, index) {
                       if (index < widget.cart.length) {
                         Item product = widget.cart[index];
-                        return Card(
+                        return Card(color: colorBgW,
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            side: const BorderSide(color: Colors.grey, width: 1.0),
+                            borderRadius: BorderRadius.circular(4.0),
+                            side: const BorderSide(color: ct, width: 1.0),
                           ),
                           elevation: 2,
                           margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
@@ -140,7 +141,7 @@ class _CartPageState extends State<CartPage> {
                               ],
                             ),
                             trailing: IconButton(
-                              icon: const Icon(Icons.delete),
+                              icon: const Icon(IconsaxPlusLinear.trash),
                               onPressed: () {
                                 success(
                                   context: context,
@@ -158,8 +159,8 @@ class _CartPageState extends State<CartPage> {
                         // This section creates the shopping summary card
                         return Card(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            side: const BorderSide(color: Colors.grey, width: 1.0),
+                            borderRadius: BorderRadius.circular(4.0),
+                            side: const BorderSide(color: bgc, width: 1.0),
                           ),
                           elevation: 2,
                           margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
@@ -179,7 +180,7 @@ class _CartPageState extends State<CartPage> {
                                       flex: 3,
                                       child: TextField(
                                         decoration: InputDecoration(
-                                          hintText: 'Enter Discount Code',
+                                          labelText: 'Discount Code',
                                           border: OutlineInputBorder(),
                                         ),
                                       ),
@@ -193,8 +194,11 @@ class _CartPageState extends State<CartPage> {
                                         },
                                         style: ElevatedButton.styleFrom(
                                           backgroundColor: colorPrimary,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(12.0),
+                                          ),
                                         ),
-                                        child: const Text('Apply'),
+                                        child: const Text('Apply', style: TextStyle(color: blFa),),
                                       ),
                                     ),
                                   ],
@@ -215,7 +219,7 @@ class _CartPageState extends State<CartPage> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text('Delivery Fee'),
-                                    const Text('₦1,500'),
+                                    Text('₦1,500'),
                                   ],
                                 ),
                                 const SizedBox(height: 8),

@@ -25,8 +25,7 @@ class _BottomNavState extends State<BottomNav> {
 
   void addToCart(Item product) {
     setState(() {
-      final existingItemIndex =
-          cart.indexWhere((item) => item.id == product.id);
+      final existingItemIndex = cart.indexWhere((item) => item.id == product.id);
       if (existingItemIndex >= 0) {
         cart[existingItemIndex].quantity++;
       } else {
@@ -37,8 +36,7 @@ class _BottomNavState extends State<BottomNav> {
 
   void removeFromCart(Item product) {
     setState(() {
-      final existingItemIndex =
-          cart.indexWhere((item) => item.id == product.id);
+      final existingItemIndex = cart.indexWhere((item) => item.id == product.id);
       if (existingItemIndex >= 0) {
         cart[existingItemIndex].quantity--;
         if (cart[existingItemIndex].quantity == 0) {
@@ -75,123 +73,116 @@ class _BottomNavState extends State<BottomNav> {
   Widget build(BuildContext context) {
     int cartItemCount = getTotalCartQuantity();
     return Scaffold(
-        body: Center(
-          child: _widgetOptions().elementAt(_selectedIndex),
-        ),
-        bottomNavigationBar: Container(
-          decoration: const BoxDecoration(color: colorBgW),
-          child: Padding(
-            padding:
-                const EdgeInsets.only(left: 24, right: 24, bottom: 15, top: 15),
-            child: Container(
-              height: 60,
-              decoration: const BoxDecoration(
-                  color: blFa,
-                  borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20))),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: () => _onItemTapped(0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          IconsaxPlusBold.home_2,
-                          color: _selectedIndex == 0
-                              ? colorPrimary
-                              : colorBgW,
-                        ),
+      body: Center(
+        child: _widgetOptions().elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: Container(
+        decoration: const BoxDecoration(color: colorBgW),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 24, right: 24, bottom: 15, top: 15),
+          child: Container(
+            height: 60,
+            decoration: const BoxDecoration(
+              color: blFa,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () => _onItemTapped(0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        IconsaxPlusBold.home_2,
+                        color: _selectedIndex == 0 ? colorPrimary : colorBgW,
+                      ),
+                      if (_selectedIndex == 0)
                         Text(
                           'Home',
                           style: TextStyle(
-                            color: _selectedIndex == 0
-                                ? colorPrimary
-                                : colorBgW,
+                            color: _selectedIndex == 0 ? colorPrimary : colorBgW,
                           ),
                         ),
-                      ],
-                    ),
+                    ],
                   ),
-                  GestureDetector(
-                    onTap: () => _onItemTapped(1),
-                    child: Stack(
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              IconsaxPlusBold.shopping_cart,
-                              color: _selectedIndex == 1
-                                  ? colorPrimary
-                                  : colorBgW,
-                            ),
+                ),
+                GestureDetector(
+                  onTap: () => _onItemTapped(1),
+                  child: Stack(
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            IconsaxPlusBold.shopping_cart,
+                            color: _selectedIndex == 1 ? colorPrimary : colorBgW,
+                          ),
+                          if (_selectedIndex == 1)
                             Text(
                               'Cart',
                               style: TextStyle(
-                                color: _selectedIndex == 1
-                                    ? colorPrimary
-                                    : colorBgW,
+                                color: _selectedIndex == 1 ? colorPrimary : colorBgW,
                               ),
                             ),
-                          ],
-                        ),
-                        if (cartItemCount > 0)
-                          Positioned(
-                            right: 0,
-                            child: Container(
-                              padding: const EdgeInsets.all(1),
-                              decoration: BoxDecoration(
-                                color: blFa,
-                                borderRadius: BorderRadius.circular(10),
+                        ],
+                      ),
+                      if (cartItemCount > 0)
+                        Positioned(
+                          right: 0,
+                          child: Container(
+                            padding: const EdgeInsets.all(1),
+                            decoration: BoxDecoration(
+                              color: blFa,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            constraints: const BoxConstraints(
+                              minWidth: 18,
+                              minHeight: 18,
+                            ),
+                            child: Text(
+                              '$cartItemCount',
+                              style: const TextStyle(
+                                color: colorPrimary,
+                                fontSize: 12,
                               ),
-                              constraints: const BoxConstraints(
-                                minWidth: 18,
-                                minHeight: 18,
-                              ),
-                              child: Text(
-                                '$cartItemCount',
-                                style: const TextStyle(
-                                  color: colorPrimary,
-                                  fontSize: 12,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
+                              textAlign: TextAlign.center,
                             ),
                           ),
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => _onItemTapped(2),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Icon(
-                          IconsaxPlusBold.shopping_cart,
-                          color: _selectedIndex == 2
-                              ? colorPrimary
-                              : colorBgW,
                         ),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => _onItemTapped(2),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Icon(
+                        IconsaxPlusBold.shopping_cart,
+                        color: _selectedIndex == 2 ? colorPrimary : colorBgW,
+                      ),
+                      if (_selectedIndex == 2)
                         Text(
                           'Checkout',
                           style: TextStyle(
-                            color: _selectedIndex == 2
-                                ? colorPrimary
-                                : colorBgW,
+                            color: _selectedIndex == 2 ? colorPrimary : colorBgW,
                           ),
                         ),
-                      ],
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
