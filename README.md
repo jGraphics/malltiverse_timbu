@@ -30,7 +30,31 @@ Here are some of the project's best features:
 *   splashscreen
 *   circular progression
 
-  
+  <h2>🛠️ Installation Steps:</h2>
+
+<p>1. Create an account with Timbu.cloud and create a shop/organization</p>
+
+<p>2. Get your API KEY` APP ID and ORGANIZATION ID</p>
+
+<p>3. Git clone this repository</p>
+
+```
+git clone https://github.com/jGraphics/malltiverse_timbu.git
+```
+
+<p>4. Run flutter pub get in the directory/main project folder</p>
+
+```
+flutter pub get
+```
+
+<p>5. On your timbu account store add your products along with products details price etc</p>
+
+<p>6. Replace to API KEY` APP ID and ORGANIZATION ID with your stores information in the folder.</p>
+
+<p>7. Modify other screens as desired</p>
+
+<p>8. Add more components and functionalities as desired and needed.</p>
   
 <h2>💻 Built with</h2>
 
