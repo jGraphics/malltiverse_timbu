@@ -94,8 +94,7 @@ class Item {
         photos: List<Photo>.from(json["photos"].map((x) => Photo.fromJson(x))),
         prices: json["prices"],
         stocks: json["stocks"],
-        currentPrice: null ??
-            List<CurrentPrice>.from(
+        currentPrice: List<CurrentPrice>.from(
                 json["current_price"].map((x) => CurrentPrice.fromJson(x))),
         isDeleted: json["is_deleted"],
         availableQuantity: json["available_quantity"],

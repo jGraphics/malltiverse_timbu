@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:malltiverse_timbu/apis/timbu_api.dart';
 import 'package:malltiverse_timbu/constants/colors.dart';
-import 'package:malltiverse_timbu/screens/view_product.dart';
 import 'package:malltiverse_timbu/apis/models/listOfProductItem.dart';
 
 class ProductScreen extends StatefulWidget {
@@ -43,8 +42,8 @@ class _ProductScreenState extends State<ProductScreen> {
     final NumberFormat currencyFormat =
         NumberFormat.currency(symbol: '₦', decimalDigits: 2);
 
-    return Scaffold(
-      appBar: AppBar(
+    return Scaffold( 
+      appBar: AppBar(toolbarHeight: 90, 
         leadingWidth: 65,
         leading: Image.asset(
           './assets/images/mall_logo.png', width: 120, height: 40,
@@ -154,19 +153,19 @@ class _ProductScreenState extends State<ProductScreen> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: GestureDetector(
                                       onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                ViewProductPage(
-                                              id: product.id,
-                                              itemPrice: currencyFormat.format(
-                                                  product.currentPrice?[0]
-                                                          .ngn[0] ??
-                                                      0),
-                                            ),
-                                          ),
-                                        );
+                                        // Navigator.push(
+                                          // context,
+                                          // MaterialPageRoute(
+                                          //   builder: (context) =>
+                                          //       ViewProductPage(
+                                          //     id: product.id,
+                                          //     itemPrice: currencyFormat.format(
+                                          //         product.currentPrice?[0]
+                                          //                 .ngn[0] ??
+                                          //             0),
+                                          //   ),
+                                          // ),
+                                        // );
                                       },
                                       child: Container(
                                         width: 250,

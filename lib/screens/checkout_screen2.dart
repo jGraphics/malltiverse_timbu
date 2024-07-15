@@ -1,12 +1,7 @@
-import 'dart:ui';
 import 'payment_screen.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-
-
-
-
+import 'package:google_fonts/google_fonts.dart';
+import 'package:malltiverse_timbu/constants/colors.dart';
 
 class CheckoutStage2 extends StatefulWidget {
   @override
@@ -21,27 +16,42 @@ class _CheckoutStage2State extends State<CheckoutStage2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(leading: Image.asset('./assets/images/mall_logo.png', scale: 2.0,),
+      appBar: AppBar(
+        leading: Padding(padding: const EdgeInsets.only(left: 24.0),
+        child: SizedBox(
+        child:  Image.asset('./assets/images/mall_logo.png', ),
+        ),
+        ),
         title: const Text('Checkout ', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 19),),
       centerTitle: true,),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
+      body: SingleChildScrollView(child: Padding(
+        padding: const EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
-            const Text(
-              'Select how to recceive your packages(s)',
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            ),
-                        const SizedBox(height: 21),
-            const Text(
-              'Pickup',
-              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
-            ),
+                 Text(
+                      'Select how to recceive your packages(s)',
+                      style: GoogleFonts.montserrat(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),       const SizedBox(height: 21),
+                   Text(
+                      'Pickup',
+                      style: GoogleFonts.montserrat(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ), 
+           
             ListTile(
-              title: const Text('Old Secretariat Complex, Area 1, Garki Abaji Abji',
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),),
+              title: Text(
+                      'Old Secretariat Complex, Area 1, Garki Abaji Abji',
+                      style: GoogleFonts.montserrat(
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
               leading: Radio<String>(
                 value: 'Address 1',
                 groupValue: _selectedAddress,
@@ -53,8 +63,8 @@ class _CheckoutStage2State extends State<CheckoutStage2> {
               ),
             ),
             ListTile(
-              title: const Text('Sokoto Street, Area 1, Garki Area 1 AMAC',
-              style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),),
+              title: Text('Sokoto Street, Area 1, Garki Area 1 AMAC',
+              style: GoogleFonts.montserrat(fontSize: 12, fontWeight: FontWeight.w400),),
               leading: Radio<String>(
                 value: 'Address 2',
                 groupValue: _selectedAddress,
@@ -66,42 +76,66 @@ class _CheckoutStage2State extends State<CheckoutStage2> {
               ),
             ),
             const SizedBox(height: 20),
-           const Text(
-              'Delivery',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 35,),
-            TextField(
-              controller: _deliveryAddressController,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
+            Text(
+                    'Delivery',
+                      style: GoogleFonts.montserrat(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+            const SizedBox(height: 12),
+            SizedBox(height: 60,
+              child: 
+                TextField(
+                  controller: _deliveryAddressController,
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(9))),
+                  ),
+                ),
               ),
-            ),
             const SizedBox(height: 20),
-            const Text(
-              'Contact',
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 12,),
-            TextField(
-              controller: _phoneNumberController,
-              decoration: const InputDecoration(
-                labelText: 'Phone nos 1',
-                border: OutlineInputBorder(),
+            Text(
+                      'Contact',
+                      style: GoogleFonts.montserrat(
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+            const SizedBox (height: 12,),
+            SizedBox( height: 38.83, width: 248,
+              child: 
+                TextField(
+                  controller: _phoneNumberController,
+                  decoration: const InputDecoration(
+                    labelText: 'Phone nos 1',
+                    border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                  ),
+                  keyboardType: TextInputType.phone,
+                ),
               ),
-              keyboardType: TextInputType.phone,
-            ),
             const SizedBox(height: 16,),
-            TextField(
-              controller: _deliveryAddressController,
-              decoration: const InputDecoration(
-                labelText: 'Phone nos 1',
-                border: OutlineInputBorder(),
+    SizedBox( height: 38.83, width: 248,
+              child: 
+                TextField(
+                  controller: _phoneNumberController,
+                  decoration: const InputDecoration(
+                    labelText: 'Phone nos 1',
+                    border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                  ),
+                  keyboardType: TextInputType.phone,
+                ),
               ),
-            ),
-            const SizedBox(height: 20),
+   const SizedBox(height: 20),
             Center(
-              child: ElevatedButton(
+              child: 
+              Container(
+              width: 307,
+              height: 44,
+              decoration: const BoxDecoration(
+                color: colorPrimary,
+                borderRadius: BorderRadius.all(Radius.circular(12)),
+              ),
+              child: TextButton(
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
@@ -109,12 +143,22 @@ class _CheckoutStage2State extends State<CheckoutStage2> {
                     ),
                   );
                 },
-                child: const Text('Proceed to Payment'),
+                child: Text(
+                  'Proceed to Payment',
+                  style: GoogleFonts.montserrat(
+                    textStyle: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 12,
+                      color: blFa,
+                    ),
+                  ),
+                ),
               ),
             ),
-          ],
-        ),
-      ),
+            ),
+        ],),
+     ),
+     ),
     );
   }
 }
