@@ -1,16 +1,64 @@
-# malltiverse_timbu
+<h1 align="center" id="title">Jejelove Malltiverse Timbu App</h1>
 
-A new Flutter project.
+<p align="center"><img src="peggyroxy.me" alt="project-image"></p>
 
-## Getting Started
+<p id="description">A shopping app getting data from Timbu Api this time lists them by categories. Users can add products to the cart and also delete products from the cart which is reflected on the bottom tab bar also.
+Part of HNG Internship </p>
 
-This project is a starting point for a Flutter application.
+![Mobile App - My cart](https://github.com/user-attachments/assets/dba61c7e-572d-42fe-a441-964693a5ac81)
+![Mobile App - Product List 3](https://github.com/user-attachments/assets/35a6e7b2-8bcf-4d8b-ab75-fe9b291eb6ec)
+![Mobile App - Payment](https://github.com/user-attachments/assets/22598232-8b82-45ab-9c29-fcd97adceb6d)
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+<h2>🚀 Demo</h2>
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+[https://drive.google.com/drive/folders/1HuJf-TPLKT6VWD8BygloYgl77BSsKiLt?usp=sharing](https://drive.google.com/drive/folders/1HuJf-TPLKT6VWD8BygloYgl77BSsKiLt?usp=sharing)
+
+  
+  
+<h2>🧐 Features</h2>
+
+Here are some of the project's best features:
+
+*   Add to cart
+*   Bottom Nav bar
+*   Bottom bar indicator
+*   Remove from cart
+*   checkout screen
+*   delivery option
+*   pickup option
+*   splashscreen
+*   circular progression
+
+  <h2>🛠️ Installation Steps:</h2>
+
+<p>1. Create an account with Timbu.cloud and create a shop/organization</p>
+
+<p>2. Get your API KEY` APP ID and ORGANIZATION ID</p>
+
+<p>3. Git clone this repository</p>
+
+```
+git clone https://github.com/jGraphics/malltiverse_timbu.git
+```
+
+<p>4. Run flutter pub get in the directory/main project folder</p>
+
+```
+flutter pub get
+```
+
+<p>5. On your timbu account store add your products along with products details price etc</p>
+
+<p>6. Replace to API KEY` APP ID and ORGANIZATION ID with your stores information in the folder.</p>
+
+<p>7. Modify other screens as desired</p>
+
+<p>8. Add more components and functionalities as desired and needed.</p>
+  
+<h2>💻 Built with</h2>
+
+Technologies used in the project:
+
+*   Flutter
+*   Timbu API
