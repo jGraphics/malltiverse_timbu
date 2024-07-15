@@ -26,6 +26,7 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   final NumberFormat currencyFormat =
       NumberFormat.currency(symbol: '₦', decimalDigits: 2);
+  final TextEditingController _discountCodeController = TextEditingController();
 
   void checkout() {
     Navigator.push(
@@ -61,10 +62,12 @@ class _CartPageState extends State<CartPage> {
 
   @override
   Widget build(BuildContext context) {
-    double totalPrice = widget.cart.fold(0.00, (previousValue, product) {
+    const double deliveryFee = 1500.00;
+    double subTotalPrice = widget.cart.fold(0.00, (previousValue, product) {
       return previousValue +
-          (product.currentPrice?[0].ngn[0] ?? 0.0 * product.quantity);
+          ((product.currentPrice?[0].ngn[0] ?? 0.0) * product.quantity);
     });
+    double totalPrice = subTotalPrice + deliveryFee;
 
     return Scaffold(
       appBar: AppBar(
@@ -118,7 +121,7 @@ class _CartPageState extends State<CartPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '₦${product.currentPrice?[0].ngn[0].toString()}',
+                                  '₦${currencyFormat.format(product.currentPrice?[0].ngn[0] ?? 0.0)}',
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -189,32 +192,52 @@ class _CartPageState extends State<CartPage> {
                                 const SizedBox(height: 12),
                                 Row(
                                   children: [
-                                    const Expanded(
+                                    Expanded(
                                       flex: 3,
-                                      child: TextField(
-                                        decoration: InputDecoration(
-                                          labelText: 'Discount Code',
-                                          border: OutlineInputBorder(),
+                                      child: SizedBox(
+                                        height: 41.18,
+                                        width: 247,
+                                        child: TextField(
+                                          controller: _discountCodeController,
+                                          decoration: const InputDecoration(
+                                            labelText: 'Discount Code',
+                                            border: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(9))),
+                                          ),
+                                          keyboardType: TextInputType.text,
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(width: 12),
-                                    Expanded(
-                                      flex: 1,
+                                    const SizedBox(
+                                      width: 36,
+                                    ),
+                                    SizedBox(
+                                      width: 63,
+                                      height: 43,
                                       child: ElevatedButton(
                                         onPressed: () {
+                                          _discountCodeController;
                                           // Apply discount logic
                                         },
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: colorPrimary,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(12.0),
+                                        style: ButtonStyle(
+                                          minimumSize: WidgetStateProperty.all(
+                                              const Size(63, 43)),
+                                          elevation: WidgetStateProperty.all(0),
+                                          shape: WidgetStateProperty.all<
+                                              RoundedRectangleBorder>(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                            ),
                                           ),
                                         ),
-                                        child: const Text(
+                                        child: Text(
                                           'Apply',
-                                          style: TextStyle(color: blFa),
+                                          style: GoogleFonts.montserrat(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500,
+                                              color: blFa),
                                         ),
                                       ),
                                     ),
@@ -227,7 +250,7 @@ class _CartPageState extends State<CartPage> {
                                   children: [
                                     const Text('Sub-Total'),
                                     Text(
-                                      currencyFormat.format(totalPrice),
+                                      currencyFormat.format(subTotalPrice),
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
