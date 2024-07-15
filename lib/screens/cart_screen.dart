@@ -257,12 +257,9 @@ class _CartPageState extends State<CartPage> {
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold),
                                     ),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
                                   ],
                                 ),
-                                const SizedBox(height: 12),
+                                const SizedBox(height: 35),
                                 Center(
                                   child: Container(
                                     width: 307,
