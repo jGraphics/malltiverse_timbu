@@ -45,9 +45,10 @@ class _ProductScreenState extends State<ProductScreen> {
     return Scaffold( 
       appBar: AppBar(toolbarHeight: 90, 
         leadingWidth: 65,
-        leading: Image.asset(
+        leading: Padding(padding:const EdgeInsets.only(left: 24),
+        child: SizedBox(child: Image.asset(
           './assets/images/mall_logo.png', width: 120, height: 40,
-          fit: BoxFit.contain,
+          fit: BoxFit.contain,),),
         ),
         title: Text(
           'Product List',
