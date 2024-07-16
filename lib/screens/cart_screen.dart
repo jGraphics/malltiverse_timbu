@@ -212,32 +212,23 @@ class _CartPageState extends State<CartPage> {
                                     const SizedBox(
                                       width: 36,
                                     ),
-                                    SizedBox(
-                                      width: 63,
-                                      height: 43,
+                                    Expanded(
+                                      flex: 1,
                                       child: ElevatedButton(
                                         onPressed: () {
                                           _discountCodeController;
-                                          // Apply discount logic
                                         },
-                                        style: ButtonStyle(
-                                          minimumSize: WidgetStateProperty.all(
-                                              const Size(63, 43)),
-                                          elevation: WidgetStateProperty.all(0),
-                                          shape: WidgetStateProperty.all<
-                                              RoundedRectangleBorder>(
-                                            RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: colorPrimary,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
                                           ),
                                         ),
-                                        child: Text(
+                                        child: const Text(
                                           'Apply',
-                                          style: GoogleFonts.montserrat(
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w500,
-                                              color: blFa),
+                                          style: TextStyle(
+                                              color: blFa, fontSize: 12),
                                         ),
                                       ),
                                     ),

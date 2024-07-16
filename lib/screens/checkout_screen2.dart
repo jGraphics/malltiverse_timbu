@@ -30,7 +30,7 @@ class _CheckoutStage2State extends State<CheckoutStage2> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
                  Text(
-                      'Select how to recceive your packages(s)',
+                      'Select how to receive your packages(s)',
                       style: GoogleFonts.montserrat(
                         fontSize: 16.0,
                         fontWeight: FontWeight.w500,
