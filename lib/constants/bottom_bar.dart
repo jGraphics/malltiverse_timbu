@@ -166,7 +166,7 @@ class _BottomNavState extends State<BottomNav> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Icon(JtCart.shopcart,
+                      Icon(JtCart.shopcart, size: 32,
                         color: _selectedIndex == 2 ? colorPrimary : colorBgW,
                       ),
                       if (_selectedIndex == 2)
