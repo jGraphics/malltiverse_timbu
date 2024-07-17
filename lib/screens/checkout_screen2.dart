@@ -18,9 +18,7 @@ class _CheckoutStage2State extends State<CheckoutStage2> {
     return Scaffold(
       appBar: AppBar(
         leading: Padding(padding: const EdgeInsets.only(left: 24.0),
-        child: SizedBox(
         child:  Image.asset('./assets/images/mall_logo.png', width: 99, height: 31,), 
-        ),
         ),
         title: const Text('Checkout ', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 19),),
       centerTitle: true,),

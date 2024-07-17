@@ -257,6 +257,7 @@ class _CartPageState extends State<CartPage> {
                                   ],
                                 ),
                                 const SizedBox(height: 8),
+                                const Divider(),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,

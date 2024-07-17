@@ -21,5 +21,5 @@ class JtCart {
   static const _kFontFam = 'JtCart';
   static const String? _kFontPkg = null;
 
-  static const IconData group_2238 = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData shopcart = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }

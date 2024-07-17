@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import '../screens/product_screen.dart';
 import '../apis/models/listOfProductItem.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
+import 'package:malltiverse_timbu/jt_cart_icons.dart';
 import 'package:malltiverse_timbu/constants/colors.dart';
 import 'package:malltiverse_timbu/screens/checkout_screen2.dart';
+
 
 class BottomNav extends StatefulWidget {
   const BottomNav({super.key});
@@ -100,7 +102,7 @@ class _BottomNavState extends State<BottomNav> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Icon(
-                        IconsaxPlusBold.home_2,
+                        IconsaxPlusLinear.home_2,
                         color: _selectedIndex == 0 ? colorPrimary : colorBgW,
                       ),
                       if (_selectedIndex == 0)
@@ -121,7 +123,7 @@ class _BottomNavState extends State<BottomNav> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(
-                            IconsaxPlusBold.shopping_cart,
+                            IconsaxPlusLinear.shopping_cart,
                             color: _selectedIndex == 1 ? colorPrimary : colorBgW,
                           ),
                           if (_selectedIndex == 1)
@@ -164,8 +166,7 @@ class _BottomNavState extends State<BottomNav> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      Icon(
-                        IconsaxPlusBold.shopping_cart,
+                      Icon(JtCart.shopcart,
                         color: _selectedIndex == 2 ? colorPrimary : colorBgW,
                       ),
                       if (_selectedIndex == 2)
