@@ -20,7 +20,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
         title: const Text('Payment'),
         backgroundColor: colorBgW,
       ),
-      body: Padding(
+      body: 
+      SingleChildScrollView(
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
@@ -97,6 +99,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
           ],
         ),
       ),
-    );
+    ),);
   }
 }

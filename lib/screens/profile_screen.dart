@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:malltiverse_timbu/constants/colors.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -50,7 +51,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ListTile(
-              leading: const Icon(Icons.account_circle, color: colorPrimary),
+              leading: const Icon(IconsaxPlusLinear.personalcard, color: colorPrimary),
               title: const Text('Account Information'),
               trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
               onTap: () {
@@ -59,7 +60,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             const Divider(),
             ListTile(
-              leading: const Icon(Icons.settings, color: colorPrimary),
+              leading: const Icon(IconsaxPlusLinear.settings, color: colorPrimary),
               title: const Text('Settings'),
               trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
               onTap: () {
@@ -68,7 +69,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             const Divider(),
             ListTile(
-              leading: const Icon(Icons.history, color: colorPrimary),
+              leading: const Icon(IconsaxPlusLinear.receipt_item, color: colorPrimary),
               title: const Text('Order History'),
               trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
               onTap: () {
@@ -77,7 +78,7 @@ class ProfileScreen extends StatelessWidget {
             ),
             const Divider(),
             ListTile(
-              leading: const Icon(Icons.logout, color: colorPrimary),
+              leading: const Icon(IconsaxPlusLinear.logout, color: colorPrimary),
               title: const Text('Logout'),
               trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
               onTap: () {

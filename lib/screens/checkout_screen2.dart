@@ -19,7 +19,7 @@ class _CheckoutStage2State extends State<CheckoutStage2> {
       appBar: AppBar(
         leading: Padding(padding: const EdgeInsets.only(left: 24.0),
         child: SizedBox(
-        child:  Image.asset('./assets/images/mall_logo.png', ),
+        child:  Image.asset('./assets/images/mall_logo.png', width: 99, height: 31,), 
         ),
         ),
         title: const Text('Checkout ', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 19),),
@@ -46,7 +46,7 @@ class _CheckoutStage2State extends State<CheckoutStage2> {
            
             ListTile(
               title: Text(
-                      'Old Secretariat Complex, Area 1, Garki Abaji Abji',
+                      'Old Secretariat Complex, Area 1, Garki Abuja',
                       style: GoogleFonts.montserrat(
                         fontSize: 12.0,
                         fontWeight: FontWeight.w400,
@@ -144,17 +144,15 @@ class _CheckoutStage2State extends State<CheckoutStage2> {
                   );
                 },
                 child: Text(
-                  'Proceed to Payment',
-                  style: GoogleFonts.montserrat(
-                    textStyle: const TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12,
+                    'Payment Sucessful',
+                    style: GoogleFonts.montserrat(
                       color: blFa,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
               ),
-            ),
             ),
         ],),
      ),

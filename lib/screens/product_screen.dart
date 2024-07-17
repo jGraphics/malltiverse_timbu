@@ -30,7 +30,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
   void getAllProductByCategory() async {
     final get = Provider.of<TimbuApiProvider>(context, listen: false);
-    var categories = ["Tech Gadget", "Men's Fashion", "Women's Fashion"];
+    var categories = ["Tech-Gadget", "Men's-Fashion", "Womenn%27s-Fashion"];
 
     for (var category in categories) {
       var products = await get.getProductByCategory(category);
@@ -51,8 +51,8 @@ class _ProductScreenState extends State<ProductScreen> {
         leadingWidth: 65,
         leading: Image.asset(
           './assets/images/mall_logo.png',
-          width: 120,
-          height: 40,
+          width: 99,
+          height: 31,
           fit: BoxFit.contain,
         ),
         title: Text(

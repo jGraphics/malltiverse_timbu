@@ -40,7 +40,7 @@ class _ViewProductPageState extends State<ViewProductPage> {
     try {
       var product = await get.getAProduct(widget.id!);
       setState(() {
-        name = product.name;
+        name = product.name ?? '';
         item = product;
         isLoading = false;
       });
@@ -128,17 +128,18 @@ class _ViewProductPageState extends State<ViewProductPage> {
                             ),
                           ),
                     const SizedBox(height: 20),
-                    Text(
-                      item!.name!.toUpperCase(),
-                      softWrap: true,
-                      style: const TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
-                    ),
+                        Text(
+                            item!.name!.toUpperCase(),
+                            softWrap: true,
+                            style: const TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          )
+                       ,
                     const SizedBox(height: 8),
                     Text(
-                      currencyFormat.format(itemPrice ?? 0),
+                      currencyFormat.format(itemPrice),
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
@@ -146,13 +147,22 @@ class _ViewProductPageState extends State<ViewProductPage> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    Text(
-                      item?.description ?? text,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
+                    item!.description == null
+                        ? Text(
+                            text2,
+                            softWrap: true,
+                            style: const TextStyle(
+                                fontSize: 17,
+                                fontWeight: FontWeight.normal,
+                                color: Colors.black),
+                          )
+                        : Text(
+                           item!.description!,
+                            style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
                     const SizedBox(height: 20),
                     ReviewSlider(reviews: const [
                       "Great product!",
