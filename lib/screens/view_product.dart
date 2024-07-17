@@ -111,7 +111,7 @@ class _ViewProductPageState extends State<ViewProductPage> {
                               borderRadius: BorderRadius.circular(10),
                               image: DecorationImage(
                                 image: NetworkImage(
-                                    "https://api.timbu.cloud/images/${item?.photos[0].url}"),
+                                    "https://api.timbu.cloud/images/${item!.photos[0].url}"),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -128,15 +128,14 @@ class _ViewProductPageState extends State<ViewProductPage> {
                             ),
                           ),
                     const SizedBox(height: 20),
-                        Text(
-                            item!.name!.toUpperCase(),
-                            softWrap: true,
-                            style: const TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black),
-                          )
-                       ,
+                    Text(
+                      item?.name?.toUpperCase() ?? 'No Name',
+                      softWrap: true,
+                      style: const TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
                     const SizedBox(height: 8),
                     Text(
                       currencyFormat.format(itemPrice),
@@ -147,22 +146,14 @@ class _ViewProductPageState extends State<ViewProductPage> {
                       ),
                     ),
                     const SizedBox(height: 20),
-                    item!.description == null
-                        ? Text(
-                            text2,
-                            softWrap: true,
-                            style: const TextStyle(
-                                fontSize: 17,
-                                fontWeight: FontWeight.normal,
-                                color: Colors.black),
-                          )
-                        : Text(
-                           item!.description!,
-                            style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
+                    Text(
+                      item?.description ?? text2,
+                      softWrap: true,
+                      style: const TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.black),
+                    ),
                     const SizedBox(height: 20),
                     ReviewSlider(reviews: const [
                       "Great product!",

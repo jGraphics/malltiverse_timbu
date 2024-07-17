@@ -71,12 +71,31 @@ class _CartPageState extends State<CartPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'My Cart',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
+         leadingWidth: 120,
         backgroundColor: colorBgW,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 24.0),
+          child: SizedBox(
+            width: 200.0,
+            child: Image.asset(
+              'assets/images/mall_logo.png',
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
+    title: Text(
+          'Cart',
+          style: GoogleFonts.montserrat(
+            textStyle: const TextStyle(
+              fontSize: 19.0,
+              fontWeight: FontWeight.w600,
+              height: 1.22,
+              color: blFa,
+            ),
+          ),
+        ),
+        elevation: 0,
+        centerTitle: true,
       ),
       backgroundColor: colorBgW,
       body: SingleChildScrollView(

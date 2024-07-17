@@ -3,13 +3,10 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:malltiverse_timbu/apis/connectionUrl/apiUrl.dart';
 
-
-
 class TimbuApiProvider with ChangeNotifier {
   bool _isLoading = false;
   bool get loading => _isLoading;
 
-  
   void setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
@@ -17,8 +14,7 @@ class TimbuApiProvider with ChangeNotifier {
 
   Future<MainProduct> getProductByCategory(String category) async {
     setLoading(true);
-    var getTimbu =
-        '${Timbu().productUrl}?&organization_id=${Timbu().organizationId}&Appid=${Timbu().appId}&Apikey=${Timbu().apiKey}&category=$category';
+    var getTimbu = '${Timbu().productUrl}?organization_id=${Timbu().organizationId}&Appid=${Timbu().appId}&Apikey=${Timbu().apiKey}&category=$category&size=12&page=1';
     if (kDebugMode) {
       print(getTimbu);
     }
@@ -37,6 +33,5 @@ class TimbuApiProvider with ChangeNotifier {
       throw Exception('Failed to load products');
     }
   }
-
-  getAProduct(String s) {}
+getAProduct(String s) {}
 }

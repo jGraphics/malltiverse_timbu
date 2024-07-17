@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:malltiverse_timbu/constants/colors.dart';
 
 class ReviewSlider extends StatelessWidget {
   final String text1 = lorem(paragraphs: 1, words: 15);
@@ -21,7 +22,7 @@ class ReviewSlider extends StatelessWidget {
         initialPage: 0,
         viewportFraction: 1,
         autoPlay: true,
-        height: 250,
+        height: 200,
         autoPlayInterval: const Duration(seconds: 5),
         enlargeCenterPage: true,
         enlargeFactor: 0.8,
@@ -89,7 +90,7 @@ class ReviewSlider extends StatelessWidget {
                   5,
                   (index) => const Icon(
                     Icons.star,
-                    color: Colors.amberAccent,
+                    color: colorPrimary,
                     size: 30,
                   ),
                 ),

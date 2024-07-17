@@ -28,17 +28,17 @@ class _ProductScreenState extends State<ProductScreen> {
     getAllProductByCategory();
   }
 
-  void getAllProductByCategory() async {
-    final get = Provider.of<TimbuApiProvider>(context, listen: false);
-    var categories = ["Tech-Gadget", "Men's-Fashion", "Women's-Fashion"];
+void getAllProductByCategory() async {
+  final get = Provider.of<TimbuApiProvider>(context, listen: false);
+  var categories = ["Tech-Gadget", "Men's-Fashion", "Women's-Fashion"];
 
-    for (var category in categories) {
-      var products = await get.getProductByCategory(category);
-      setState(() {
-        _categoryProducts[category] = products.items;
-      });
-    }
+  for (var category in categories) {
+    var products = await get.getProductByCategory(category);
+    setState(() {
+      _categoryProducts[category] = products.items;
+    });
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +46,32 @@ class _ProductScreenState extends State<ProductScreen> {
         NumberFormat.currency(symbol: '₦', decimalDigits: 2);
 
     return Scaffold(
+      appBar: AppBar(
+        leadingWidth: 99,
+        backgroundColor: colorBgW,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 24.0),
+          child: SizedBox(
+            width: 200.0,
+            child: Image.asset(
+              'assets/images/mall_logo.png',
+              fit: BoxFit.contain,
+            ),
+          ),
+        ),
+        title: Text(
+          'Product List',
+          style: GoogleFonts.montserrat(
+            textStyle: const TextStyle(
+              fontSize: 19.0,
+              fontWeight: FontWeight.w600,
+              color: blFa,
+            ),
+          ),
+        ),
+        elevation: 0,
+        centerTitle: true,
+      ),
       backgroundColor: colorBgW,
       body: _categoryProducts.isEmpty
           ? const Center(child: CircularProgressIndicator())
@@ -53,36 +79,6 @@ class _ProductScreenState extends State<ProductScreen> {
               padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
               child: Column(
                 children: [
-                  SizedBox(
-                    height: 40,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(
-                                './assets/images/mall_logo.png',
-                                width: 40,
-                                height: 40,
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                          ],
-                        ),
-                        const Text(
-                          "Product List",
-                          style: TextStyle(
-                            fontFamily: "Montserrat",
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                   const SizedBox(height: 20),
                   Container(
                     width: 380,
@@ -215,7 +211,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                                     "https://api.timbu.cloud/images/${product.photos[0].url}",
                                                     height: 150,
                                                     width: double.infinity,
-                                                    fit: BoxFit.cover,
+                                                    fit: BoxFit.contain,
                                                   ),
                                                 ),
                                                 Padding(
@@ -226,7 +222,7 @@ class _ProductScreenState extends State<ProductScreen> {
                                                       Text(
                                                         product.name ?? '',
                                                         style: const TextStyle(
-                                                          fontSize: 16,
+                                                          fontSize: 12,
                                                           fontWeight: FontWeight.bold,
                                                         ),
                                                         maxLines: 1,
@@ -236,9 +232,9 @@ class _ProductScreenState extends State<ProductScreen> {
                                                       Text(
                                                         product.description ?? '',
                                                         style: const TextStyle(
-                                                          fontSize: 14,
+                                                          fontSize: 12,
                                                         ),
-                                                        maxLines: 2,
+                                                        maxLines: 1,
                                                         overflow: TextOverflow.ellipsis,
                                                       ),
                                                       const SizedBox(height: 4),
@@ -263,14 +259,14 @@ class _ProductScreenState extends State<ProductScreen> {
                                                           widget.addToCart(product);
                                                         },
                                                         style: ButtonStyle(
-                                                          padding: WidgetStateProperty.all(const EdgeInsets.symmetric(horizontal: 20)),
-                                                          side: WidgetStateProperty.all(
+                                                          padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 20)),
+                                                          side: MaterialStateProperty.all(
                                                             const BorderSide(
                                                               color: colorPrimary,
                                                               width: 1.0,
                                                             ),
                                                           ),
-                                                          shape: WidgetStateProperty.all(
+                                                          shape: MaterialStateProperty.all(
                                                             RoundedRectangleBorder(
                                                               borderRadius: BorderRadius.circular(14),
                                                             ),

@@ -17,6 +17,7 @@ class _CheckoutStage2State extends State<CheckoutStage2> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leadingWidth: 99,
         leading: Padding(padding: const EdgeInsets.only(left: 24.0),
         child:  Image.asset('./assets/images/mall_logo.png', width: 99, height: 31,), 
         ),
