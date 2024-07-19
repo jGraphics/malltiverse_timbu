@@ -46,8 +46,8 @@ class OnbordingContent extends StatelessWidget {
         /// if you are using SVG then replace [Image.asset] with [SvgPicture.asset]
 
         Image.asset(
-          image,
-          height: 250,
+              'assets/images/mall_logo.png',
+          height: 250, 
         ),
         if (!isTextOnTop) const Spacer(),
         if (!isTextOnTop)

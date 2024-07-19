@@ -10,6 +10,7 @@ import '../apis/models/listOfProductItem.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:flutter_lorem/flutter_lorem.dart';
 import 'package:malltiverse_timbu/model/message_res.dart';
+import 'package:malltiverse_timbu/constants/wish_list_provider.dart';
 
 class ViewProductPage extends StatefulWidget {
   const ViewProductPage({super.key, this.id, this.itemPrice});
@@ -71,6 +72,7 @@ class _ViewProductPageState extends State<ViewProductPage> {
 
   @override
   Widget build(BuildContext context) {
+   final wishlistProvider = Provider.of<WishlistProvider>(context, listen: false);
     double? itemPrice = double.tryParse(
         widget.itemPrice?.replaceAll('₦', '').replaceAll(',', '') ?? '0');
     return Scaffold(
@@ -95,38 +97,22 @@ class _ViewProductPageState extends State<ViewProductPage> {
         ),
         centerTitle: true,
       ),
+      
       body: isLoading
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    item != null && item!.photos.isNotEmpty
-                        ? Container(
-                            width: 380,
-                            height: 232,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://api.timbu.cloud/images/${item!.photos[0].url}"),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          )
-                        : Container(
-                            width: 380,
-                            height: 232,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: const DecorationImage(
-                                image: AssetImage('./assets/images/hnc.png'),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 240, // Adjust as per your design
+              child: Image.network(
+                "https://api.timbu.cloud/images/${item?.photos[0].url}",
+                fit: BoxFit.cover,
+              ),
+            ),
                     const SizedBox(height: 20),
                     Text(
                       item?.name?.toUpperCase() ?? 'No Name',

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:malltiverse_timbu/constants/bNav.dart';
+import 'package:malltiverse_timbu/constants/bottom_bar.dart';
 
 class OnboardingController extends ChangeNotifier {
   final PageController pageController;
@@ -17,7 +17,7 @@ class OnboardingController extends ChangeNotifier {
   void navigateToWelcome(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (context) => const BNavWidget(),
+        builder: (context) => const BottomNav(),
       ),
     );
   }

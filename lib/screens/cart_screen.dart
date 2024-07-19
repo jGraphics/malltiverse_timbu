@@ -13,11 +13,11 @@ class CartPage extends StatefulWidget {
   final void Function() updateCart;
 
   const CartPage({
-    Key? key,
+    super.key,
     required this.cart,
     required this.removeFromCart,
     required this.updateCart,
-  }) : super(key: key);
+  });
 
   @override
   _CartPageState createState() => _CartPageState();
@@ -173,7 +173,7 @@ class _CartPageState extends State<CartPage> {
                               ],
                             ),
                             trailing: IconButton(
-                              icon: const Icon(IconsaxPlusLinear.trash),
+                              icon: const Icon(IconsaxPlusLinear.trash, color: Colors.red,),
                               onPressed: () {
                                 success(
                                   context: context,

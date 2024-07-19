@@ -11,7 +11,13 @@ import 'screens/checkout_screen2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'apis/models/OnBoardingController.dart';
+import 'package:malltiverse_timbu/screens/wish_list.dart';
 import 'package:malltiverse_timbu/constants/bottom_bar.dart';
+import 'package:malltiverse_timbu/screens/order_history.dart';
+import 'package:malltiverse_timbu/constants/wish_list_provider.dart';
+
+
+
 
 
 void main() {
@@ -28,6 +34,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => TimbuApiProvider(),
         ),
+         ChangeNotifierProvider(
+          create: (_) => WishlistProvider(),
+          ),
         ChangeNotifierProvider(
           create: (_) => OnboardingController(
             pageController: PageController(),
@@ -45,8 +54,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         initialRoute: 'bnav',
         routes: {
+                   'onboarding': (context) => const OnboardingScreen(),
           'bnav': (context) => const BottomNav(),
-        //  'onboarding': (context) => const OnboardingScreen(),
           'checkout': (context) => const CheckoutSuccessPage(),
           'cart': (context) => CartPage(
                 cart: const [],
@@ -56,9 +65,11 @@ class MyApp extends StatelessWidget {
           'profile': (context) => const ProfileScreen(),
           'product': (context) => ProductScreen(
                 cart: const [],
-                addToCart: (product) {},
+                addToCart: (product) {}, category: '',
               ),
           'products-detail': (context) => const ViewProductPage(),
+          'order-history': (context) => const OrderHistoryScreen(),
+          'wish-list': (context) => const WishlistScreen(wishlistItems: [],),
           'checkout_stage_2': (context) => CheckoutStage2(), // Add route for checkout stage 2
           'payment': (context) => PaymentScreen(), // Add route for payment screen
         },

@@ -2,22 +2,29 @@ import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:malltiverse_timbu/apis/timbu_api.dart';
 import 'package:malltiverse_timbu/constants/colors.dart';
 import 'package:malltiverse_timbu/screens/view_product.dart';
+import 'package:malltiverse_timbu/screens/profile_screen.dart';
+import 'package:malltiverse_timbu/apis/models/mainListProduct.dart';
+import 'package:malltiverse_timbu/constants/wish_list_provider.dart';
 import 'package:malltiverse_timbu/apis/models/listOfProductItem.dart';
 
 class ProductScreen extends StatefulWidget {
+  final String category;
   final List<Item> cart;
   final void Function(Item product) addToCart;
 
-  const ProductScreen({super.key, required this.cart, required this.addToCart});
+  const ProductScreen({super.key, required this.category, required this.cart, required this.addToCart});
 
   @override
-  State<ProductScreen> createState() => _ProductScreenState();
+  _ProductScreenState createState() => _ProductScreenState();
 }
 
 class _ProductScreenState extends State<ProductScreen> {
+  final List<Item> _wishlistItems = [];
+  late Future<MainProduct> futureProducts;
   final Map<String, List<Item>> _categoryProducts = {};
   final PageController _pageController = PageController();
   int _currentPageIndex = 0;
@@ -25,25 +32,58 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   void initState() {
     super.initState();
+    futureProducts = Provider.of<TimbuApiProvider>(context, listen: false)
+    .getProductByCategory(widget.category);
     getAllProductByCategory();
   }
 
-void getAllProductByCategory() async {
-  final get = Provider.of<TimbuApiProvider>(context, listen: false);
-  var categories = ["Tech-Gadget", "Men's-Fashion", "Women's-Fashion"];
+  void getAllProductByCategory() async {
+    final get = Provider.of<TimbuApiProvider>(context, listen: false);
+    var categories = ["Tech-Gadget", "Men's-Fashion", "Women's-Fashion"];
 
-  for (var category in categories) {
-    var products = await get.getProductByCategory(category);
-    setState(() {
-      _categoryProducts[category] = products.items;
-    });
+    for (var category in categories) {
+      var products = await get.getProductByCategory(category);
+      setState(() {
+        _categoryProducts[category] = products.items;
+      });
+    }
   }
-}
+
+   void addToWishlist(Item product) {
+    final wishlistProvider = Provider.of<WishlistProvider>(context, listen: false);
+    if (!_wishlistItems.contains(product)) {
+      wishlistProvider.addToWishlist(product);
+      setState(() {
+        _wishlistItems.add(product);
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${product.name} added to wishlist'),
+          duration: const Duration(seconds: 2),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Item is already in your wishlist'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+  }
+
+  void removeFromWishlist(Item product) {
+    final wishlistProvider = Provider.of<WishlistProvider>(context, listen: false);
+    setState(() {
+      _wishlistItems.remove(product);
+    });
+    wishlistProvider.removeFromWishlist(product);
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    final NumberFormat currencyFormat =
-        NumberFormat.currency(symbol: '₦', decimalDigits: 2);
+    final NumberFormat currencyFormat = NumberFormat.currency(symbol: '₦', decimalDigits: 2);
 
     return Scaffold(
       appBar: AppBar(
@@ -69,6 +109,18 @@ void getAllProductByCategory() async {
             ),
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(IconsaxPlusLinear.user_octagon),
+            color: blFa,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfileScreen()),
+              );
+            },
+          ),
+        ],
         elevation: 0,
         centerTitle: true,
       ),
@@ -175,13 +227,9 @@ void getAllProductByCategory() async {
                                             Navigator.push(
                                               context,
                                               MaterialPageRoute(
-                                                builder: (context) =>
-                                                    ViewProductPage(
+                                                builder: (context) => ViewProductPage(
                                                   id: product.id,
-                                                  itemPrice: currencyFormat.format(
-                                                      product.currentPrice?[0]
-                                                              .ngn[0] ??
-                                                          0),
+                                                  itemPrice: currencyFormat.format(product.currentPrice?[0].ngn[0] ?? 0),
                                                 ),
                                               ),
                                             );
@@ -202,17 +250,34 @@ void getAllProductByCategory() async {
                                             child: Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                ClipRRect(
-                                                  borderRadius: const BorderRadius.only(
-                                                    topLeft: Radius.circular(10),
-                                                    topRight: Radius.circular(10),
-                                                  ),
-                                                  child: Image.network(
-                                                    "https://api.timbu.cloud/images/${product.photos[0].url}",
-                                                    height: 150,
-                                                    width: double.infinity,
-                                                    fit: BoxFit.contain,
-                                                  ),
+                                                Stack(
+                                                  alignment: Alignment.topRight,
+                                                  children: [
+                                                    ClipRRect(
+                                                      borderRadius: const BorderRadius.only(
+                                                        topLeft: Radius.circular(10),
+                                                        topRight: Radius.circular(10),
+                                                      ),
+                                                      child: Image.network(
+                                                        "https://api.timbu.cloud/images/${product.photos[0].url}",
+                                                        height: 150,
+                                                        width: double.infinity,
+                                                        fit: BoxFit.contain,
+                                                      ),
+                                                    ),
+                                                    IconButton(
+                                                      icon: _wishlistItems.contains(product)
+                                                          ? const Icon(Icons.favorite, color: Colors.red)
+                                                          : const Icon(Icons.favorite_border, color: Colors.red),
+                                                      onPressed: () {
+                                                        if (_wishlistItems.contains(product)) {
+                                                          removeFromWishlist(product);
+                                                        } else {
+                                                          addToWishlist(product);
+                                                        }
+                                                      },
+                                                    ),
+                                                  ],
                                                 ),
                                                 Padding(
                                                   padding: const EdgeInsets.all(8.0),
@@ -242,7 +307,7 @@ void getAllProductByCategory() async {
                                                         children: [
                                                           Image(image: AssetImage('assets/images/fill_star.png')),
                                                           Image(image: AssetImage('assets/images/fill_star.png')),
-                                                          Image(image: AssetImage('assets/images/fill_star.png')),
+                                                         Image(image: AssetImage('assets/images/fill_star.png')),
                                                           Image(image: AssetImage('assets/images/fill_star.png')),
                                                           Image(image: AssetImage('assets/images/fill_star.png')),
                                                         ],
@@ -259,14 +324,14 @@ void getAllProductByCategory() async {
                                                           widget.addToCart(product);
                                                         },
                                                         style: ButtonStyle(
-                                                          padding: MaterialStateProperty.all(const EdgeInsets.symmetric(horizontal: 20)),
-                                                          side: MaterialStateProperty.all(
+                                                          padding: WidgetStateProperty.all(const EdgeInsets.symmetric(horizontal: 20)),
+                                                          side: WidgetStateProperty.all(
                                                             const BorderSide(
                                                               color: colorPrimary,
                                                               width: 1.0,
                                                             ),
                                                           ),
-                                                          shape: MaterialStateProperty.all(
+                                                          shape: WidgetStateProperty.all(
                                                             RoundedRectangleBorder(
                                                               borderRadius: BorderRadius.circular(14),
                                                             ),
@@ -297,19 +362,20 @@ void getAllProductByCategory() async {
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: List.generate(3, (index) {
-                              return Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 10),
-                                width: 8.0,
-                                height: 8.0,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: _currentPageIndex == index
-                                      ? colorPrimary
-                                      : Colors.grey,
-                                ), 
-                              );
-                            }), 
+                            children: List.generate(
+                              (_categoryProducts[category]!.length / 2).ceil(),
+                                  (index) {
+                                return Container(
+                                  margin: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 10),
+                                  width: 8.0,
+                                  height: 8.0,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: _currentPageIndex == index ? colorPrimary : Colors.grey,
+                                  ),
+                                );
+                              },
+                            ),
                           ),
                         ],
                       );
@@ -321,3 +387,4 @@ void getAllProductByCategory() async {
     );
   }
 }
+

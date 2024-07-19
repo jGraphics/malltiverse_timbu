@@ -1,11 +1,15 @@
 import '../screens/cart_screen.dart';
 import 'package:flutter/material.dart';
 import '../screens/product_screen.dart';
+import 'package:provider/provider.dart';
 import '../apis/models/listOfProductItem.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:malltiverse_timbu/jt_cart_icons.dart';
 import 'package:malltiverse_timbu/constants/colors.dart';
+import 'package:malltiverse_timbu/screens/wish_list.dart';
 import 'package:malltiverse_timbu/screens/checkout_screen2.dart';
+import 'package:malltiverse_timbu/constants/wish_list_provider.dart';
+
 
 
 class BottomNav extends StatefulWidget {
@@ -60,7 +64,7 @@ class _BottomNavState extends State<BottomNav> {
     return [
       ProductScreen(
         cart: cart,
-        addToCart: addToCart,
+        addToCart: addToCart, category: '',
       ),
       CartPage(
         cart: cart,
@@ -68,12 +72,16 @@ class _BottomNavState extends State<BottomNav> {
         updateCart: updateCart,
       ),
       CheckoutStage2(),
+      const WishlistScreen(wishlistItems: [],), // Add WishlistScreen to the options
     ];
   }
 
   @override
   Widget build(BuildContext context) {
+    final wishlistProvider = Provider.of<WishlistProvider>(context);
     int cartItemCount = getTotalCartQuantity();
+    int wishlistItemCount = wishlistProvider.wishlistItems.length;
+
     return Scaffold(
       body: Center(
         child: _widgetOptions().elementAt(_selectedIndex),
@@ -110,6 +118,52 @@ class _BottomNavState extends State<BottomNav> {
                           'Home',
                           style: TextStyle(
                             color: _selectedIndex == 0 ? colorPrimary : colorBgW,
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () => _onItemTapped(3), // Navigate to Wishlist
+                  child: Stack(
+                    children: <Widget>[
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            IconsaxPlusLinear.heart,
+                            color: _selectedIndex == 3 ? colorPrimary : colorBgW,
+                          ),
+                          if (_selectedIndex == 3)
+                            Text(
+                              'Wishlist',
+                              style: TextStyle(
+                                color: _selectedIndex == 3 ? colorPrimary : colorBgW,
+                              ),
+                            ),
+                        ],
+                      ),
+                      if (wishlistItemCount > 0)
+                        Positioned(
+                          right: 0,
+                          child: Container(
+                            padding: const EdgeInsets.all(1),
+                            decoration: BoxDecoration(
+                              color: blFa,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            constraints: const BoxConstraints(
+                              minWidth: 18,
+                              minHeight: 18,
+                            ),
+                            child: Text(
+                              '$wishlistItemCount',
+                              style: const TextStyle(
+                                color: colorPrimary,
+                                fontSize: 12,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
                     ],

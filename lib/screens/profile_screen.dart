@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax_plus/iconsax_plus.dart';
 import 'package:malltiverse_timbu/constants/colors.dart';
+import 'package:malltiverse_timbu/screens/wish_list.dart';
+import 'package:malltiverse_timbu/screens/order_history.dart';
+import 'package:malltiverse_timbu/apis/models/listOfProductItem.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  final List<Item>? wishlistItems; // Declare wishlistItems as nullable
+
+  const ProfileScreen({Key? key, this.wishlistItems});
 
   @override
   Widget build(BuildContext context) {
@@ -20,29 +25,30 @@ class ProfileScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              color: colorPrimary,
+              color: colorBgW,
               child: const Padding(
                 padding: EdgeInsets.symmetric(vertical: 20.0),
                 child: Column(
                   children: [
                     CircleAvatar(
                       radius: 50,
-                      backgroundImage: AssetImage('./assets/images/hnc.png'),                   ),
+                      backgroundImage: AssetImage('./assets/images/hnc.png'),
+                    ),
                     SizedBox(height: 10),
                     Text(
                       'Jejelove Doe', // Replace with actual user name
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: bg,
                       ),
                     ),
                     SizedBox(height: 5),
                     Text(
-                      'jejelovesolutions@gmail.com', 
+                      'jejelovesolutions@gmail.com',
                       style: TextStyle(
                         fontSize: 16,
-                        color: Colors.white70,
+                        color: blFa,
                       ),
                     ),
                   ],
@@ -51,38 +57,38 @@ class ProfileScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ListTile(
-              leading: const Icon(IconsaxPlusLinear.personalcard, color: colorPrimary),
-              title: const Text('Account Information'),
-              trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
-              onTap: () {
-                // Handle navigation to account information screen
-              },
-            ),
-            const Divider(),
-            ListTile(
-              leading: const Icon(IconsaxPlusLinear.settings, color: colorPrimary),
-              title: const Text('Settings'),
-              trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
-              onTap: () {
-                // Handle navigation to settings screen
-              },
-            ),
-            const Divider(),
-            ListTile(
               leading: const Icon(IconsaxPlusLinear.receipt_item, color: colorPrimary),
               title: const Text('Order History'),
               trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
               onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const OrderHistoryScreen()),
+                );
                 // Handle navigation to order history screen
               },
             ),
             const Divider(),
             ListTile(
-              leading: const Icon(IconsaxPlusLinear.logout, color: colorPrimary),
-              title: const Text('Logout'),
+              leading: const Icon(IconsaxPlusLinear.personalcard, color: colorPrimary),
+              title: const Text('Wish List'),
               trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey),
               onTap: () {
-                // Handle logout functionality
+                if (wishlistItems != null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => WishlistScreen(wishlistItems: wishlistItems!)),
+                  );
+                } else {
+                  // Handle if wishlistItems is null or undefined
+                  // For example, show a snackbar or navigate to an empty wishlist screen
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Wishlist is empty'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                }
               },
             ),
             const Divider(),
